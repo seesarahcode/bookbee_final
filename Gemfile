@@ -4,7 +4,6 @@ source 'https://rubygems.org'
 gem 'rails', '4.0.8'
 
 # Authorization
-gem 'sprockets', '2.11.0'
 gem 'bcrypt-ruby', '3.1.2'
 
 group :development, :test do
@@ -19,7 +18,9 @@ group :test do
 end
 
 # Front-end
-gem 'sass-rails', '4.0.1'
+gem 'bootstrap-sass', '2.3.2.0'
+gem 'sass-rails'
+gem 'sprockets', '2.11.0'
 gem 'uglifier', '2.1.1'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'
