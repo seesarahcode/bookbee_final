@@ -10,6 +10,7 @@ group :development, :test do
 	gem 'sqlite3', '1.3.8'
 	gem 'rspec-rails', '2.13.1'
 	gem 'factory_girl_rails', '4.2.0'
+	gem 'faker', '1.1.2'
 end
 
 group :test do
@@ -26,6 +27,7 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
+gem 'will_paginate', '3.0.4'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
