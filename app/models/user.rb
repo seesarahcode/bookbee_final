@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  has_many :books, dependent: :destroy
+
 	before_save { self.email = email.downcase }
 	before_create :create_remember_token
 
@@ -19,6 +21,11 @@ class User < ActiveRecord::Base
 
   def User.digest(token)
   	Digest::SHA1.hexdigest(token.to_s)
+  end
+
+  def feed
+    # Early prototype
+    Book.where("user_id = ?", id)
   end
 
   private

@@ -14,26 +14,12 @@ namespace :db do
                    password: password,
                    password_confirmation: password)
     end
+
+    users = User.all(limit: 6)
+    50.times do
+      content = Faker::Lorem.words(num = 3)
+      name = Faker::Lorem.words(num = 2)
+      users.each { |user| user.books.create!(title: "#{content}", author: "#{name}", isbn: "9783161484100") }
+    end
   end
 end
-
-# namespace :db do
-#   desc "Fill database with sample data"
-#   task populate: :environment do
-#     Book.create!(title: "Harry Potter and Goblet of Fire",
-#                  author: "J.K. Rowling",
-#                  isbn: "0-7475-4624-X"
-#     30.times do |n|
-#       title  = Faker::Name.title
-#       author = "J.K. Rowling"
-#       isbn  = "0-7475-4624-X"
-#       Book.create!(title: title,
-#                    author: author,
-#                    isbn: isbn,
-#     end
-#   end
-# end
-# RUN: 
-# rake db:reset
-# $ bundle exec rake db:populate
-# $ bundle exec rake test:prepare

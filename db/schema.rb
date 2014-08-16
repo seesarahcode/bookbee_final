@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140814042140) do
+ActiveRecord::Schema.define(version: 20140815042553) do
+
+  create_table "books", force: true do |t|
+    t.string   "title"
+    t.string   "author"
+    t.string   "isbn"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "books", ["user_id", "created_at"], name: "index_books_on_user_id_and_created_at"
 
   create_table "users", force: true do |t|
     t.string   "name"

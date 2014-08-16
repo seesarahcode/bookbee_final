@@ -1,5 +1,16 @@
 <% provide(:title, @user.name) %>
-<h1>
-	<%= gravatar_for(@user) %>
-	<%= @user.name %>
-</h1>
+<div class="row">
+	<h1>
+		<%= gravatar_for(@user) %>
+		<%= @user.name %>
+	</h1>
+	 <div class="span8">
+    <% if @user.books.any? %>
+      <h3>Books (<%= @user.books.count %>)</h3>
+      <ol class="books">
+        <%= render @books %>
+      </ol>
+      <%= will_paginate @books %>
+    <% end %>
+  </div>
+</div>

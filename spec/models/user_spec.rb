@@ -9,6 +9,8 @@ describe User do
   subject { @user }
 
   it { should respond_to(:admin) }
+  it { should respond_to(:books) }
+  it { should respond_to(:feed) }
   it { should respond_to(:authenticate) }
   it { should respond_to(:name)}
   it { should respond_to(:email)}
@@ -111,4 +113,39 @@ describe User do
     end
     it { should be_admin }
   end
+
+  describe "book associations" do
+
+    before { @user.save }
+    let!(:older_book) do
+      FactoryGirl.create(:book, user: @user, created_at: 1.day.ago)
+    end
+    let!(:newer_book) do
+      FactoryGirl.create(:book, user: @user, created_at: 1.hour.ago)
+    end
+
+    it "should have the right books in the right order" do
+      expect(@user.books.to_a).to eq [newer_book, older_book]
+    end
+
+    it "should destroy associated books" do
+      books = @user.books.to_a
+      @user.destroy
+      expect(books).not_to be_empty
+      books.each do |book|
+        expect(Book.where(id: book.id)).to be_empty
+      end
+    end
+
+     describe "status" do
+      let(:unfollowed_book) do
+        FactoryGirl.create(:book, user: FactoryGirl.create(:user))
+      end
+
+      its(:feed) { should include(newer_book) }
+      its(:feed) { should include(older_book) }
+      its(:feed) { should_not include(unfollowed_book) }
+    end
+  end
+
 end

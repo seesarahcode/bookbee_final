@@ -69,6 +69,17 @@ describe "Authentication" do
     describe "for non-signed-in users" do
       let(:user) { FactoryGirl.create(:user) }
 
+      describe "in the Books controller" do
+        describe "submitting to the create action" do
+          before { post books_path }
+          specify { expect(response).to redirect_to(signin_path) }
+        end
+        describe "submitting to the destroy action" do
+          before { delete book_path(FactoryGirl.create(:book)) }
+          specify { expect(response).to redirect_to(signin_path) }
+        end
+      end
+
       describe "when attempting to visit a protected page" do
         before do
           visit edit_user_path(user)
@@ -80,7 +91,7 @@ describe "Authentication" do
         describe "after signing in" do
 
           it "should render the desired protected page" do
-            expect(page).to have_title('Edit account')
+            expect(page).to have_title('Edit profile')
           end
         end
       end

@@ -82,9 +82,18 @@ describe "UserPages" do
 
 	describe "profile page" do
 		let(:user) { FactoryGirl.create(:user) }
-		before { visit user_path(user) }
+    let!(:m1) { FactoryGirl.create(:book, user: user, title: "American Gods", author: "Neil Gaiman", isbn: "9780380789030") }
+    let!(:m2) { FactoryGirl.create(:book, user: user, title: "Stardust", author: "Neil Gaiman", isbn: "9780061689246") }
 
-		it { should have_content(user.name) }
+    before { visit user_path(user) }
+
+    it { should have_title(user.name) }
+
+    describe "books" do
+      it { should have_content(m1.title) }
+      it { should have_content(m2.author) }
+      it { should have_content(user.books.count) }
+    end
 	end
 
 	describe "edit" do
@@ -96,7 +105,7 @@ describe "UserPages" do
 
 		describe "page" do
 			it { should have_content("Update profile") }
-			it { should have_title("Edit account") }
+			it { should have_title("Edit profile") }
 			it { should have_link('Change', href: 'http://gravatar.com/emails') }
 		end
 

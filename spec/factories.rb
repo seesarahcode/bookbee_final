@@ -11,10 +11,11 @@ FactoryGirl.define do
 	end
 end
 
-# FactoryGirl.define do
-# 	factory :book do
-# 		sequence(:title) { |n| "My Memoirs, Part #{n}"}
-# 		sequence(:author) { |n| "Me"}
-# 		sequence(:isbn) { |n| "971-62161-012#{n}"}
-# 	end
-# end
+FactoryGirl.define do
+	factory :book do
+		sequence(:title) { |n| "My Memoirs, Part #{n}"}
+		sequence(:author) { |n| "Me"}
+		sequence(:isbn) { |n| "971-62161-012#{n}"}
+		user
+	end
+end
