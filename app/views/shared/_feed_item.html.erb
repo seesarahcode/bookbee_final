@@ -1,4 +1,5 @@
 <li id="<%= feed_item.id %>">
+    <span class="content"><%= image_tag feed_item.cover_url(:thumb) if feed_item.cover? %></span>
     <span class="content"><%= feed_item.title %></span>
     <span class="content"><%= feed_item.author %></span>
     <span class="content"><%= feed_item.isbn %></span>
@@ -7,8 +8,9 @@
       Posted <%= time_ago_in_words(feed_item.created_at) %> ago by
       <span class="user"><%= link_to feed_item.user.name, feed_item.user %></span>.
     </span>
-  <% if current_user?(feed_item.user) %>
-    <%= link_to "delete", feed_item, method: :delete,
+  <% if current_user?(feed_item.user) %>   |  
+  <%= link_to 'Edit', edit_book_path(feed_item) %>  | 
+  <%= link_to "Delete", feed_item, method: :delete,
                                      data: { confirm: "Do you really want to delete this book?" },
                                      title: feed_item.title %>
   <% end %>

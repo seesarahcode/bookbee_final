@@ -1,9 +1,17 @@
 <div class="row">
   <div class="span6 offset3">
+
     <%= form_for(@book) do |f| %>
       <%= f.hidden_field :approved, :value => true %>
       <%= f.submit "Approve book", class: "btn btn-large btn-success" %>
     <% end %>
+    
     <%= button_to "Burn book", @book, method: :delete, class: "btn btn-large btn-danger" %>
+    <br />
+    
+    <%= link_to 'Edit', edit_book_path %> | 
+		
+    <%= link_to 'Back', root_path %>
+  
   </div>
 </div>

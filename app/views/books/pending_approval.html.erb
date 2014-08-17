@@ -6,7 +6,9 @@
 <ul class="books">
   <% @books.each do |book| %>
     <li>
+    	<%= image_tag book.cover_url(:thumb) if book.cover? %>
       <%= link_to book.title, book %>
+      <%= link_to book.author, book %>
     </li>
   <% end %>
 </ul>

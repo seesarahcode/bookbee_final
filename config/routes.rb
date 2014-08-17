@@ -12,5 +12,6 @@ Bookbee::Application.routes.draw do
   match '/faq',     to: 'static_pages#faq', via: 'get'
   
   get '/pending_approval', to: 'books#pending_approval', as: 'pending'
+  get '/mybooks', to: 'books#user_library', as: 'user_books'
  
  end

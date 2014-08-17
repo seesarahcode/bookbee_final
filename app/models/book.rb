@@ -5,13 +5,14 @@ class Book < ActiveRecord::Base
 	scope :approved, -> { where(approved: true) }
 	scope :pending_approval, -> { where(approved: false) }
 
-	validates :title, presence: true
+	validates :title, :user_id, :cover, presence: true
 	validates :isbn, presence: true, length: { maximum: 14 }
-	validates :user_id, presence: true
+
+	mount_uploader :cover, CoverUploader
 
 	def approve!
-    self.approved = true
-    self.save
+	  self.approved = true
+	  self.save
   end
 
 end

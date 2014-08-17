@@ -1,0 +1,10 @@
+<% provide(:title, @book.title) %>
+<div class="row">
+  <aside class="span4">
+		<%= render 'shared/book_form' %>
+		<div class="text-center">
+			<%= link_to 'Show', book_path %> |
+			<%= link_to 'Back', root_path %>
+		</div>
+	</aside>
+</div>

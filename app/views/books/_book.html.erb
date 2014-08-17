@@ -1,14 +1,17 @@
 <li>
+  <span class="cover"><%= image_tag book.cover_url(:thumb) if book.cover? %></span>
   <span class="title"><%= book.title %></span>
   <span class="author"><%= book.author %></span>
   <span class="isbn"><%= book.isbn %></span>
   <span class="timestamp">
     Posted <%= time_ago_in_words(book.created_at) %> ago.
   </span>
-  <% if current_user?(book.user) %>
-    <%= link_to "edit", book, method: :update %>
-    <%= link_to "delete", book, method: :delete,
-                                     data: { confirm: "You sure?" },
-                                     title: book.title %>
-  <% end %>
+  
+  <%= link_to 'Edit', edit_book_path %> |
+  <%= link_to "Delete", book, method: :delete,
+                                     data: { confirm: "Delete book?" }  
+                                     title: book.title %> | 
+  <%= link_to 'Back', root_path %>
+
+
 </li>

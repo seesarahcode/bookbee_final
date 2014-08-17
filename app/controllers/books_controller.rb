@@ -34,7 +34,7 @@ class BooksController < ApplicationController
       flash[:success] = "Book updated!"
       redirect_to @book
     else
-      render 'show'
+      redirect_to @book, :flash => { :error => "Book could not be approved with missing fields." }
     end
   end
 
@@ -54,10 +54,14 @@ class BooksController < ApplicationController
 		@books = Book.pending_approval.paginate(page: params[:book])
 	end
 
+	def user_library
+		@feed_items = current_user.feed.paginate(page: params[:page])
+	end
+
 	private
 
 	def book_params
-		params.require(:book).permit(:title, :author, :isbn, :approved)
+		params.require(:book).permit(:title, :author, :isbn, :cover, :remote_cover_url, :approved)
 	end
 
 end

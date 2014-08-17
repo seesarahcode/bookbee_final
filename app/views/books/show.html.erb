@@ -1,17 +1,29 @@
 <% provide(:title, @book.title) %>
+
 <div class="row">
-	<h1>
-		<%= gravatar_for(@user) %>
-		<%= @user.name %>
-	</h1>
-</div>
-<div class="row">
-	<div class="span8">
+	<div class="span4">
+		<p><%= image_tag @book.cover_url(:thumb) if @book.cover? %></p>
     <p>Title: <%= @book.title %> </p>
     <p>Author: <%= @book.author %> </p>
     <p>ISBN: <%= @book.isbn %> </p>
+
+    <% if admin?(current_user) %>
+	    <% if @book.approved %>
+		  	<%= link_to 'Edit', edit_book_path %> |
+				<%= link_to "Delete", @book, method: :delete,
+                   data: { confirm: "Delete book?" } %> | 
+				<%= link_to 'Back', root_path %>
+		  <% else %>
+				<%= render 'approval' %>
+			<% end %>
+		<% else %>
+			<%= link_to 'Edit', edit_book_path %> |
+			<%= link_to "Delete", @book, method: :delete,
+                   data: { confirm: "Delete book?" } %> | 
+			<%= link_to 'Back', root_path %>
+		<% end %>
+
   </div>
 </div>
-<% unless approved?(@book) %>
-  <%= render 'approval' %>
-<% end %>
+
+

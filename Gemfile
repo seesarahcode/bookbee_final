@@ -6,6 +6,10 @@ gem 'rails', '4.0.8'
 # Authorization
 gem 'bcrypt-ruby', '3.1.2'
 
+# Features
+gem 'rmagick'
+gem 'carrierwave'
+
 group :development, :test do
 	gem 'sqlite3', '1.3.8'
 	gem 'rspec-rails', '2.13.1'
