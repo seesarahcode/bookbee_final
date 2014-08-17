@@ -1,9 +1,10 @@
+<br />
 <%= form_for(@book) do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
   <div class="field">
-    <%= f.text_area :title, placeholder: "Enter title, i.e. 'Feminism Is for Everybody'" %>
-    <%= f.text_area :author, placeholder: "Enter author, i.e. 'bell hooks" %>
-    <%= f.text_area :isbn, placeholder: "Enter ISBN, i.e. 0-89608-629-1" %>
+    <%= f.text_field :title, placeholder: "Enter title, i.e. 'Feminism Is for Everybody'" %>
+    <%= f.text_field :author, placeholder: "Enter author, i.e. 'bell hooks" %>
+    <%= f.text_field :isbn, placeholder: "Enter ISBN, i.e. 0-89608-629-1" %>
   </div>
   <%= f.submit "Post", class: "btn btn-large btn-primary" %>
 <% end %>

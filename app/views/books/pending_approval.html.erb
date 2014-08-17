@@ -1,4 +1,4 @@
-<% provide(:title, 'All books') %>
+<% provide(:title, 'Books Pending Approval') %>
 <h1>Library</h1>
 
 <%= will_paginate %>
@@ -6,7 +6,7 @@
 <ul class="books">
   <% @books.each do |book| %>
     <li>
-      <%= link_to book.title, book %>    
+      <%= link_to book.title, book %>
     </li>
   <% end %>
 </ul>

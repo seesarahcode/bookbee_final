@@ -28,6 +28,10 @@ class User < ActiveRecord::Base
     Book.where("user_id = ?", id)
   end
 
+  # def admin?
+  #   true if self.admin == :true
+  # end
+
   private
 
   	def create_remember_token

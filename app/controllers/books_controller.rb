@@ -1,9 +1,11 @@
 class BooksController < ApplicationController
-	before_action :signed_in_user, only: [:create, :destroy]
-	before_action :correct_user, only: :destroy
 
 	def index
-		@books = Book.paginate(page: params[:book])
+		@books = Book.approved.paginate(page: params[:book])
+	end
+
+	def new
+		@book = Book.new
 	end
 
 	def create
@@ -17,20 +19,45 @@ class BooksController < ApplicationController
     end
 	end
 
+	def show
+		@book = Book.find(params[:id])
+		@user = User.find(@book.user_id)
+	end
+
+	def edit
+		@book = Book.find(params[:id])
+	end
+
+	def update
+    @book = Book.find(params[:id])
+    if @book.update_attributes(book_params)
+      flash[:success] = "Book updated!"
+      redirect_to @book
+    else
+      render 'show'
+    end
+  end
+
 	def destroy
-		@book.destroy
-		redirect_to root_url
+		@book = Book.find(params[:id])
+		@user = User.find(@book.user_id)
+		@book.destroy 
+  	if current_user.admin
+  		flash[:success] = "Book deleted."
+  		redirect_to pending_path
+  	else
+  		redirect_to books_path
+  	end
+	end
+
+	def pending_approval
+		@books = Book.pending_approval.paginate(page: params[:book])
 	end
 
 	private
 
 	def book_params
-		params.require(:book).permit(:title, :author, :isbn)
-	end
-
-	def correct_user
-		@book = current_user.books.find_by(id: params[:id])
-		redirect_to root_url if @book.nil?
+		params.require(:book).permit(:title, :author, :isbn, :approved)
 	end
 
 end

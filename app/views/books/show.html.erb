@@ -1,0 +1,17 @@
+<% provide(:title, @book.title) %>
+<div class="row">
+	<h1>
+		<%= gravatar_for(@user) %>
+		<%= @user.name %>
+	</h1>
+</div>
+<div class="row">
+	<div class="span8">
+    <p>Title: <%= @book.title %> </p>
+    <p>Author: <%= @book.author %> </p>
+    <p>ISBN: <%= @book.isbn %> </p>
+  </div>
+</div>
+<% unless approved?(@book) %>
+  <%= render 'approval' %>
+<% end %>

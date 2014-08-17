@@ -5,9 +5,30 @@
       <nav>
         <ul class="nav pull-right">
           <li><%= link_to "Home", root_path %></li>
-          <li><%= link_to "FAQ", faq_path %></li>
+          <li><%= link_to "View library", books_path %></li>
           <% if signed_in? %>
-            <li><%= link_to "Users", users_path %></li>
+            <!-- Books -->
+            <li id="fat-menu" class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Books <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                <li><%= link_to "Add a book", new_book_path %></li>
+                <li><%= link_to "Your bookshelf", '#' %></li>
+                <%# if user.admin?  > 
+                <%= link_to "Approve books", pending_approval_path %>
+              </ul>
+            </li>
+            <!-- Admin -->
+            <% if admin?(current_user) %>
+              <li id="fat-menu" class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                <li><%= link_to "Approve books", pending_path %></li>
+              </ul>
+            </li>
+            <% end %>
+            <!-- Account -->
             <li id="fat-menu" class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 Account <b class="caret"></b>

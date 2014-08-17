@@ -1,0 +1,16 @@
+<% provide(:title, 'Add a Book') %>
+
+<h1>Bookbee</h1>
+
+<% if signed_in? %>
+  <div class="row">
+    <aside class="span4">
+      <section>
+        <%= render 'shared/user_info' %>
+      </section>
+      <section>
+        <%= render 'shared/book_form' %>
+      </section>
+    </aside>
+
+<% end %>
