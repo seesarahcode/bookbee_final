@@ -6,62 +6,42 @@
     <p>Title: <%= @book.title %> </p>
     <p>Author: <%= @book.author %> </p>
     <p>ISBN: <%= @book.isbn %> </p>
-    <p><%= rating_for @book, "book_rating", :disable_after_rate => true %></p>
+    
 
-    <% if admin?(current_user) %>
-	    <% if @book.approved %>
-		  	<%= link_to 'Edit', edit_book_path %> |
-				<%= link_to "Delete", @book, method: :delete,
-                   data: { confirm: "Delete book?" } %> | 
-				<%= link_to 'Back', root_path %>
+    <% if deactivated?(@book) %>
+
+    		<%= link_to 'Back', root_path %><br />
+    		<%= render 'reviews' %>
+    		<%= link_to 'Back', root_path %><br />
+
+    <% else %>
+
+    	<% if admin?(current_user) %>
+    		<% if @book.approved == false %>
+    			<%= render 'approval' %>
+    		<% else %>
+    			<%= rating_for @book, "book_rating", :disable_after_rate => true %>
+    			<%= render 'edit_links' %>
+    			<%= link_to 'Back', root_path %><br />
+    			<%= link_to "Add a review", new_book_review_path(@book) %>
+					<br />
+					<%= render 'reviews' %>
+    		<% end %>
+    	<% elsif current_user.id == @book.user_id %>
+  		  <%= rating_for @book, "book_rating", :disable_after_rate => true %>
+  			<% render 'edit_links' %>
+  			<%= link_to 'Back', root_path %><br />
+  			<%= link_to "Add a review", new_book_review_path(@book) %>
 				<br />
-				<%= link_to "Add a review", new_book_review_path(@book) %>
+				<%= render 'reviews' %>
+			<% else %>
+				<%= link_to 'Back', root_path %><br />
+  			<%= link_to "Add a review", new_book_review_path(@book) %>
 				<br />
-				
-				<ul class="reviews">
-				  <% @book.reviews.each do |review| %>
-				  	<br />
-				    <li>Title: <%= review.title %> </li>
-				    <% @review_user = User.find_by_id(review.user_id) %>
-				     <li><%= rating_for_user @book, @review_user, "book_rating" %></li>
-				    <li>By <%= link_to "#{@review_user.name}", user_path(@review_user) %> </li>
-				    <li>Review: <%= review.text %> </li>
-				    <li>Favorite quote: <%= review.fave_quote %> </li>
-      			<%= link_to 'Edit', edit_book_review_path(@book, review) %>
-    				<%= link_to 'Destroy', book_review_path(@book, review), method: :delete, data: { confirm: 'Are you sure?' } %>
-				    <br />
-				  <% end %>
-				</ul>
+				<%= render 'reviews' %>
+    	<% end %>
 
-
-		  <% else %>
-				<%= render 'approval' %>
-			<% end %>
-		<% else %>
-			<%# link_to 'Add Review', new_review_path(param1: @book.id, param2: current_user.id) %>
-			<br />
-			<%= link_to 'Edit', edit_book_path %> |
-			<%= link_to "Delete", @book, method: :delete,
-                   data: { confirm: "Delete book?" } %> | 
-			<%= link_to 'Back', root_path %>
-			<br />
-		
-			<br />
-				
-				<ul class="reviews">
-				  <% @book.reviews.each do |review| %>
-				    <li><%= review.title %> </li>
-				    <% @review_user = User.find_by_id(review.user_id) %>
-				    <li>By <%= link_to "#{@review_user.name}", user_path(@review_user) %> %> </li>
-				    <li><%= review.text %> </li>
-				    <li><%= review.fave_quote %> </li>
-				    <% if @review_user == current_user %>
-        			<%= link_to 'Edit', edit_book_review_path(@book, review) %>
-      				<%= link_to 'Destroy', book_review_path(@book, review), method: :delete, data: { confirm: 'Are you sure?' } %>
-				    <% end %>
-				  <% end %>
-				</ul>
-		<% end %> 
+    <% end %>
 
   </div>
 </div>

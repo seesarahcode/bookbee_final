@@ -20,4 +20,9 @@ class Book < ActiveRecord::Base
 	  self.save
   end
 
+  def deactivate!
+  	self.deactived = true
+  	self.save
+  end
+
 end

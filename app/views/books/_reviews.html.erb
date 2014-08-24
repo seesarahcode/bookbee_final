@@ -1,0 +1,30 @@
+<ul class="reviews">
+  <% @book.reviews.each do |review| %>
+  	<br />
+
+    <li>Title: 
+    	<%= review.title %> 
+    </li>
+
+    <% @review_user = User.find_by_id(review.user_id) %>
+    <li>
+    	<%= rating_for_user @book, @review_user, "book_rating" %>
+    </li>
+
+    <li>Review: 
+    	<%= review.text %> 
+    </li>
+
+    <li>Favorite quote: 
+    	<%= review.fave_quote %> 
+    </li>
+
+    <li>By 
+    	<%= link_to "#{@review_user.name}", user_path(@review_user) %> 
+    </li>
+    <!-- should check for user review ownership -->
+		<%= link_to 'Edit', edit_book_review_path(@book, review) %>
+		<%= link_to 'Destroy', book_review_path(@book, review), method: :delete, data: { confirm: 'Are you sure?' } %>
+    <br />
+  <% end %>
+</ul>

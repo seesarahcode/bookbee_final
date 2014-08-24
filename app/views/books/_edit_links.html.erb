@@ -1,0 +1,6 @@
+<%= link_to 'Edit', edit_book_path %> 
+<% if @book.reviews.any? || has_ratings?(@book) %>
+	<%= render 'deactivate' %>
+<% else %>
+	| <%= link_to "Delete", @book, method: :delete, data: { confirm: "Delete book?" } %> |
+<% end %>
