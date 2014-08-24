@@ -10,6 +10,7 @@ describe User do
 
   it { should respond_to(:admin) }
   it { should respond_to(:books) }
+  it { should respond_to(:reviews) }
   it { should respond_to(:feed) }
   it { should respond_to(:authenticate) }
   it { should respond_to(:name)}

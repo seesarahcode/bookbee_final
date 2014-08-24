@@ -3,8 +3,8 @@ require 'spec_helper'
 describe Book do
   let(:user) { FactoryGirl.create(:user) }
   before do
-  	# wrong
-  	@book = Book.new(title: "American Gods", author: "Neil Gaiman", isbn: "9783161484100", user_id: user.id)
+  	@book = Book.new(title: "American Gods", author: "Neil Gaiman", 
+      isbn: "9783161484100", user_id: user.id, cover: "image.jpg")
   end
 
   subject { @book }
@@ -13,6 +13,7 @@ describe Book do
 	it { should respond_to(:author)}
 	it { should respond_to(:isbn) }
   it { should respond_to(:user_id) }
+  it { should respond_to(:cover) } 
   it { should respond_to(:user) }
   its(:user) { should eq user }
 
@@ -31,5 +32,10 @@ describe Book do
   describe "with ISBN that is too long" do
   	before { @book.isbn = "123456789012345" }
   	it { should_not be_valid }
+  end
+
+  describe "with ISBN that is too long" do
+    before { @book.isbn = "123456789012345" }
+    it { should_not be_valid }
   end
 end

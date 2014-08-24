@@ -1,0 +1,19 @@
+<br />
+<%= form_for([@book, @book.reviews.new]) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <div class="field">
+
+    <%= f.label :title, "Title:" %>
+    <%= f.text_field :title, placeholder: "Title of Review" %>
+
+    <%= f.label :text, "Review:" %>
+    <%= f.text_area :text, placeholder: "Review text goes here..." %>
+
+    <%= f.label :fave_quote, "Favorite Quote:" %>
+    <%= f.text_field :fave_quote, placeholder: "It was the best of times..." %>
+
+    <%= f.hidden_field :user_id, :value => current_user.id %>
+
+  </div>
+  <%= f.submit "Post", class: "btn btn-large btn-primary" %>
+<% end %>

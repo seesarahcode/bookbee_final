@@ -82,8 +82,10 @@ describe "UserPages" do
 
 	describe "profile page" do
 		let(:user) { FactoryGirl.create(:user) }
-    let!(:m1) { FactoryGirl.create(:book, user: user, title: "American Gods", author: "Neil Gaiman", isbn: "9780380789030") }
-    let!(:m2) { FactoryGirl.create(:book, user: user, title: "Stardust", author: "Neil Gaiman", isbn: "9780061689246") }
+    let!(:m1) { FactoryGirl.create(:book, user: user, title: "American Gods", 
+                                    author: "Neil Gaiman", isbn: "9780380789030", cover: "http://kapachino.info/wp-content/uploads/2011/02/neverwhere.jpg") }
+    let!(:m2) { FactoryGirl.create(:book, user: user, title: "Stardust", 
+                                    author: "Neil Gaiman", isbn: "9780061689246", cover: "http://kapachino.info/wp-content/uploads/2011/02/neverwhere.jpg") }
 
     before { visit user_path(user) }
 

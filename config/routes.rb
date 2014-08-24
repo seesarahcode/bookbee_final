@@ -1,8 +1,12 @@
 Bookbee::Application.routes.draw do
   
+  post '/rate' => 'rater#create', :as => 'rate'
+
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
-  resources :books
+  resources :books do
+    resources :reviews
+  end
 
   root 'static_pages#home'
 

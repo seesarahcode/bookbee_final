@@ -7,6 +7,10 @@ module Permissions
       allow :books, [:edit, :update] do |book|
         book.user_id == user.id
       end
+      allow :reviews, [:index, :show, :new, :create]
+      allow :reviews, [:edit, :update] do |review|
+        review.user_id == user.id
+      end
       allow_param :book, :title
     end
   end
