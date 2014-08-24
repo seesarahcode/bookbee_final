@@ -58,10 +58,19 @@ class BooksController < ApplicationController
 		@feed_items = current_user.feed.paginate(page: params[:page])
 	end
 
+	def tagged
+		if params[:tag].present?
+			@books = Book.tagged_with(params[:tag])
+		else
+			@books = Book.postall
+		end
+	end
+
 	private
 
 	def book_params
-		params.require(:book).permit(:title, :author, :isbn, :cover, :remote_cover_url, :approved)
+		params.require(:book).permit(:title, :author, :isbn, 
+			:cover, :remote_cover_url, :approved, :tag_list)
 	end
 
 end

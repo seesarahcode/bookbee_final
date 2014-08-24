@@ -6,7 +6,12 @@
     <p>Title: <%= @book.title %> </p>
     <p>Author: <%= @book.author %> </p>
     <p>ISBN: <%= @book.isbn %> </p>
-    
+    <p> Tags: </p>
+    <% if @book.tags.any? %>
+      <% @book.tags.each do |tag| %>
+      <%= link_to tag.name, tagged_url(:tag => tag.name) %>
+      <% end %>
+    <% end %>
 
     <% if deactivated?(@book) %>
 

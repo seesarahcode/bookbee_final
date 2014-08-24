@@ -3,9 +3,18 @@
   <%= render 'shared/error_messages', object: f.object %>
   <div class="field">
 
+    <%= f.label :title, "Title" %>
     <%= f.text_field :title, placeholder: "Enter title, i.e. 'Feminism Is for Everybody'" %>
+
+    <%= f.label :author, "Author" %>
     <%= f.text_field :author, placeholder: "Enter author, i.e. 'bell hooks" %>
+
+    <%= f.label :isbn, "ISBN" %>
     <%= f.text_field :isbn, placeholder: "Enter ISBN, i.e. 0-89608-629-1" %>
+
+    <%= f.label :tags %>
+    <%= f.text_field :tag_list %>
+
     <%= f.file_field :cover %><br />
     <br />
     <%= f.label :remote_cover_url, "Or enter cover URL:" %>

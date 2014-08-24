@@ -1,4 +1,6 @@
 module BooksHelper
+	
+	include ActsAsTaggableOn::TagsHelper
 
 	def approved?(book)
 		book.approved == true

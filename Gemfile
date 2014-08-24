@@ -10,6 +10,7 @@ gem 'bcrypt-ruby', '3.1.2'
 gem 'rmagick'
 gem 'carrierwave'
 gem 'ratyrate'
+gem 'acts-as-taggable-on'
 
 group :development, :test do
 	gem 'sqlite3', '1.3.8'

@@ -3,6 +3,7 @@ class Book < ActiveRecord::Base
 	has_many :reviews
 
 	ratyrate_rateable "book_rating"
+	acts_as_taggable_on :tags
 
 	accepts_nested_attributes_for :reviews
 	

@@ -14,7 +14,8 @@ Bookbee::Application.routes.draw do
   match '/signin',  to: 'sessions#new',  via: 'get'
   match '/signout', to: 'sessions#destroy', via: 'delete'
   match '/faq',     to: 'static_pages#faq', via: 'get'
-  
+
+  get '/tagged', to: 'books#tagged', as: 'tagged'
   get '/pending_approval', to: 'books#pending_approval', as: 'pending'
   get '/mybooks', to: 'books#user_library', as: 'user_books'
  
