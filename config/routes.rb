@@ -1,5 +1,7 @@
 Bookbee::Application.routes.draw do
   
+  resources :invitations
+
   post '/rate' => 'rater#create', :as => 'rate'
 
   resources :users
