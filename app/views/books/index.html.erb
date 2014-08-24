@@ -5,10 +5,20 @@
 
 <ul class="books">
   <% @books.each do |book| %>
-    <li>
-    	<%= image_tag book.cover_url(:thumb) if book.cover? %>
-      <%= link_to book.title, book %>    
-    </li>
+    <% if signed_in? %>
+	 		<li>
+	    	<%= image_tag book.cover_url(:thumb) if book.cover? %> <br /><br />
+	      <%= link_to book.title, book %>
+	      <p> Rating: <%= average_rating(book) %> </p>      
+	    </li>
+	  <% else %>
+	 		<li>
+	    	<%= image_tag book.cover_url(:thumb) if book.cover? %> <br /><br />
+	      <%= book.title %>
+	      <p> Rating: <%= average_rating(book) %> </p>    
+	      <%= link_to "Sign up to see more!", new_user_path %>
+	    </li>
+	  <% end %>
   <% end %>
 </ul>
 

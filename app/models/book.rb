@@ -2,6 +2,8 @@ class Book < ActiveRecord::Base
 	belongs_to :user
 	has_many :reviews
 
+	ratyrate_rateable "book_rating"
+
 	accepts_nested_attributes_for :reviews
 	
 	default_scope -> { order('created_at DESC')}

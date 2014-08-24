@@ -23,6 +23,9 @@ class UsersController < ApplicationController
   def show
   	@user = User.find(params[:id])
     @books = @user.books.paginate(page: params[:page])
+    if signed_in?
+      @feed_items = current_user.feed.paginate(page: params[:page])
+    end
   end
 
   def new

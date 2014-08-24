@@ -6,6 +6,7 @@
     <p>Title: <%= @book.title %> </p>
     <p>Author: <%= @book.author %> </p>
     <p>ISBN: <%= @book.isbn %> </p>
+    <p><%= rating_for @book, "book_rating", :disable_after_rate => true %></p>
 
     <% if admin?(current_user) %>
 	    <% if @book.approved %>
@@ -22,6 +23,7 @@
 				  	<br />
 				    <li>Title: <%= review.title %> </li>
 				    <% @review_user = User.find_by_id(review.user_id) %>
+				     <li><%= rating_for_user @book, @review_user, "book_rating" %></li>
 				    <li>By <%= link_to "#{@review_user.name}", user_path(@review_user) %> </li>
 				    <li>Review: <%= review.text %> </li>
 				    <li>Favorite quote: <%= review.fave_quote %> </li>
