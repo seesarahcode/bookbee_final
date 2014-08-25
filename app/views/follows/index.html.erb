@@ -1,0 +1,35 @@
+<h1>Listing follows</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Title</th>
+      <th>Ratings</th>
+      <th>Reviews</th>
+      <th>Book</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @follows.each do |follow| %>
+      <tr>
+        <td><%= follow.user_id %></td>
+        <td><%= follow.title %></td>
+        <td><%= follow.ratings %></td>
+        <td><%= follow.reviews %></td>
+        <td><%= follow.book_id %></td>
+        <td><%= link_to 'Show', follow %></td>
+        <td><%= link_to 'Edit', edit_follow_path(follow) %></td>
+        <td><%= link_to 'Destroy', follow, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Follow', new_follow_path %>

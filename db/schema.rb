@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140824141614) do
+ActiveRecord::Schema.define(version: 20140825040242) do
 
   create_table "average_caches", force: true do |t|
     t.integer  "rater_id"
@@ -35,6 +35,16 @@ ActiveRecord::Schema.define(version: 20140824141614) do
   end
 
   add_index "books", ["user_id", "created_at"], name: "index_books_on_user_id_and_created_at"
+
+  create_table "follows", force: true do |t|
+    t.integer  "user_id"
+    t.string   "title"
+    t.boolean  "ratings",    default: true
+    t.boolean  "reviews",    default: true
+    t.integer  "book_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "invitations", force: true do |t|
     t.integer  "sender_id"

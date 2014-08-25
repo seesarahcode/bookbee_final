@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   has_many :books
+  has_many :follows, dependent: :destroy
   has_many :reviews, dependent: :destroy
 
   ratyrate_rater

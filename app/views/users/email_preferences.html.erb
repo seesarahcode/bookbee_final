@@ -1,0 +1,20 @@
+<% provide(:title, 'Email Preferences') %>
+
+<h2>Frequency</h2>
+
+
+<h2>Follows</h2>
+
+<% if follows_exist?(current_user) %>
+	<% @user = current_user %>
+	<% @user.follows.each do |f| %>
+		
+		<%= f.title %><br />
+		<%= f.ratings %><br />
+		<%= f.reviews %><br />
+
+	<% end %>
+<% else %>
+	<p>Follow a book to receive rating and review notifications!</p>
+<% end %>
+

@@ -2,7 +2,8 @@
 
 <div class="row">
 	<div class="span4">
-		<p><%= image_tag @book.cover_url(:thumb) if @book.cover? %></p>
+		<p><%= image_tag @book.cover_url(:thumb) if @book.cover? %>        
+      <%= render 'shared/follow_form' %></p>
     <p>Title: <%= @book.title %> </p>
     <p>Author: <%= @book.author %> </p>
     <p>ISBN: <%= @book.isbn %> </p>
