@@ -35,6 +35,18 @@ class User < ActiveRecord::Base
     true if self.admin == :true
   end
 
+  def update_without_password(params, *options)
+    params.delete(:password)
+    params.delete(:password_confirmation)
+    result = update_attributes(params, *options)
+    clean_up_passwords
+    result
+  end
+
+  def clean_up_passwords
+    self.password = self.password_confirmation = nil
+  end
+
   private
 
   	def create_remember_token

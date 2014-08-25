@@ -1,0 +1,10 @@
+<%= link_to gravatar_for(@user), @user %>
+<h1>
+  <%= @user.name %>
+</h1>
+<span>
+  <%= link_to "View profile", @user %>
+</span>
+<span>
+  <%= pluralize(@user.books.count, "Book") %>
+</span>

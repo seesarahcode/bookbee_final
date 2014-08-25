@@ -18,6 +18,11 @@
       <%= f.label :password_confirmation, "Confirm Password" %>
       <%= f.password_field :password_confirmation %>
 
+      <% if admin?(current_user) %>
+        <%= f.label :admin, "Give admin privileges?" %>
+         <%= f.check_box :admin %>
+      <% end %>
+
       <h3> Email Preferences <h3>
 
       <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>

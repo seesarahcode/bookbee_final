@@ -10,4 +10,13 @@ class UserMailer < ActionMailer::Base
   	invitation.update_attribute(:sent_at, Time.now)
   end
 
+  def invite_admin(invitation)
+  	@user = invitation.sender_id
+  	@invitee = invitation.recipient_name
+  	@invitee_email = invitation.recipient_email
+  	@url = 'http://example.com/admin_signup'
+  	mail(to: @invitee_email, subject: "Hey #{@invitee}, join me as an admin on Bookbee!" )
+  	invitation.update_attribute(:sent_at, Time.now)
+  end
+
 end

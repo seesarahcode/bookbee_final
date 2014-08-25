@@ -1,10 +1,9 @@
 Bookbee::Application.routes.draw do
-  
-  resources :invitations
 
   post '/rate' => 'rater#create', :as => 'rate'
 
   resources :users
+  resources :invitations
   resources :sessions, only: [:new, :create, :destroy]
   resources :books do
     resources :reviews
@@ -16,6 +15,8 @@ Bookbee::Application.routes.draw do
   match '/signin',  to: 'sessions#new',  via: 'get'
   match '/signout', to: 'sessions#destroy', via: 'delete'
   match '/faq',     to: 'static_pages#faq', via: 'get'
+
+  match '/admin_signup', to: 'users#new_admin', via: 'get'
 
   get '/tagged', to: 'books#tagged', as: 'tagged'
   get '/pending_approval', to: 'books#pending_approval', as: 'pending'

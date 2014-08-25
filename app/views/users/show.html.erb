@@ -2,11 +2,27 @@
   <div class="row">
     <aside class="span4">
       <section>
-        <%= render 'shared/user_info' %>
+        <%= render 'user_info' %>
       </section>
       <section>
         <%= render 'shared/invite' %>
       </section>
+      <% if admin?(current_user) %>
+        <section>
+          <% if @user == current_user %>
+             <section>
+              <br />
+              <%= render 'shared/invite_admin' %>
+            </section>
+          <% else %>
+            <br />
+            <%# link_to "Edit profile", edit_user_path(@user) %>
+          <% end %>
+        </section>
+      <% end %>
+      <% if @user == current_user %>
+        <%= link_to "Edit profile", edit_user_path(@user) %>
+      <% end %>
     </aside>
 
    <div class="span8">
