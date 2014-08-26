@@ -9,7 +9,6 @@ module ApplicationHelper
     end
   end
 
-
   def current_user=(user)
 		@current_user = user
 	end
@@ -25,6 +24,50 @@ module ApplicationHelper
 
 	def admin?(user)
 		user.admin == true
+	end
+
+	def following?(user, book)
+		user.follows.where(book_id = book.id).exists?
+	end
+
+# Returns BCC list
+	def rating_email_list(book)
+		# email list to return at the end
+		@bcc = []
+		# search through every user and find
+		User.all.each do |u|
+			# if User has a Follow that matches this book
+			if following?(u, book)
+			# and follow's rating is set to true
+				Follow.all.each do |f|
+					if f.ratings == true
+						# add to bcc
+						bcc << u.email
+					end
+				end
+			end
+		end
+		return @bcc
+	end
+
+# Returns BCC list
+	def review_email_list(book)
+		# email list to return at the end
+		@bcc = []
+		# search through every user and find
+		User.all.each do |u|
+			# if User has a Follow that matches this book
+			if following?(u, book)
+			# and follow's rating is set to true
+				Follow.all.each do |f|
+					if f.reviews == true
+						# add to bcc
+						bcc << u.email
+					end
+				end
+			end
+		end
+		return @bcc
 	end
 
 end

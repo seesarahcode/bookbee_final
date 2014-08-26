@@ -26,6 +26,8 @@ class ReviewsController < ApplicationController
     @review = @book.reviews.build(review_params)
     respond_to do |format|
       if @review.save
+      bcc_list = review_email_list(@book)
+      ReviewMailer.review_notification(bcc_list, @book).deliver
        format.html { redirect_to [@book, @review], notice: 'Review was successfully created!' }
         format.json { render action: 'show', status: :created, location: @review }
       else
@@ -80,4 +82,28 @@ class ReviewsController < ApplicationController
     def review_params
       params.require(:review).permit(:title, :text, :fave_quote, :user_id)
     end
+
+    # Returns BCC list
+  def review_email_list(book)
+    # email list to return at the end
+    @bcc = []
+    # search through every user and find
+    User.all.each do |u|
+      # if User has a Follow that matches this book
+      if following?(u, book)
+      # and follow's rating is set to true
+        Follow.all.each do |f|
+          if f.reviews == true
+            # add to bcc
+            @bcc << u.email
+          end
+        end
+      end
+    end
+    return @bcc
+  end
+
+  def following?(user, book)
+    user.follows.where(book_id = book.id).exists?
+  end
 end

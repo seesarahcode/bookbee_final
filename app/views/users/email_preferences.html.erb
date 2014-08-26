@@ -9,9 +9,7 @@
 	<% @user = current_user %>
 	<% @user.follows.each do |f| %>
 		
-		<%= f.title %><br />
-		<%= f.ratings %><br />
-		<%= f.reviews %><br />
+		<%= f.title %>	|	<%= f.ratings %>  |	<%= f.reviews %><br />
 
 	<% end %>
 <% else %>
