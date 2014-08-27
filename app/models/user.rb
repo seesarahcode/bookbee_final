@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   has_many :reviews, dependent: :destroy
 
   ratyrate_rater
+  accepts_nested_attributes_for :follows
 
 	before_save { self.email = email.downcase }
 	before_create :create_remember_token

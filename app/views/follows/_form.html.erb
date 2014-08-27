@@ -1,0 +1,11 @@
+<% @user = current_user %>
+<%= form_for([@user, @user.follows.new]) do |f| %>
+  <div class="field">
+    <%= f.hidden_field :user_id, :value => current_user.id %>
+    <%= f.hidden_field :title, :value => @book.title %>
+    <%= f.hidden_field :ratings, :value => :true %>
+    <%= f.hidden_field :reviews, :value => :true  %>
+    <%= f.hidden_field :book_id, :value => @book.id %>
+    <%= f.submit "Follow", class: "btn btn-large btn-success" %>
+  </div>
+<% end %>

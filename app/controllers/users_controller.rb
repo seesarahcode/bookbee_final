@@ -13,23 +13,26 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
+    @user.attributes = params[:user]
+    @user.follows.each { |t| t.attributes = params[:follow][t.id.to_s] }
+    # if user_params[:password].blank?
+    #   user_params.delete(:password)
+    #   user_params.delete(:password_confirmation)
+    # end
 
-    if user_params[:password].blank?
-      user_params.delete(:password)
-      user_params.delete(:password_confirmation)
-    end
+    # successfully_updated = if needs_password?(@user, user_params)
+    #                          @user.update(user_params)
+    #                        else
+    #                          params[:user].delete(:password)
+    #                          params[:user].delete(:password_confirmation)
+    #                          @user.update_without_password(user_params)
+    #                        end
 
-    successfully_updated = if needs_password?(@user, user_params)
-                             @user.update(user_params)
-                           else
-                             params[:user].delete(:password)
-                             params[:user].delete(:password_confirmation)
-                             @user.update_without_password(user_params)
-                           end
-
-    if successfully_updated
+    if @user.valid? && @user.follows.all?(&:valid?)
+      @user.save!
+      @user.follows.each(&:save!)
       flash[:success] = "Profile updated!"
-      redirect_to user_path(@user)
+      redirect_to email_preferences_path
     else
       render 'edit'
     end

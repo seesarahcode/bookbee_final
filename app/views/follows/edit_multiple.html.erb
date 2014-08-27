@@ -1,0 +1,25 @@
+<% form_for :follow, :url => update_multiple_follows_path, :html => { :method => :put } do |f| %>
+  <ul>
+    <% for follow in @follows %>
+      <li>
+        <%= hidden_field_tag "follow_ids[]", follow.id %>
+        <%= hidden_field_tag "follow_ids[]", book.id %>
+        <%= hidden_field_tag "follow_ids[]", user.id %>
+      </li>
+    <% end %>
+  </ul>
+
+  <p>
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </p>
+  <p>
+    <%= f.label :ratings %><br />
+    <%= f.check_box :ratings %>
+  </p>
+  <p>
+    <%= f.label :reviews %><br />
+    <%= f.check_box :reviews %>
+  </p>
+  <p><%= f.submit "Submit" %></p>
+<% end %>

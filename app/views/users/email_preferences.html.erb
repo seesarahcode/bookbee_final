@@ -1,18 +1,18 @@
 <% provide(:title, 'Email Preferences') %>
 
-<h2>Frequency</h2>
+<h1>Email Preferences</h1>
+
+<h3>Frequency</h3>
 
 
-<h2>Follows</h2>
+<h3>Follows</h3>
 
-<% if follows_exist?(current_user) %>
-	<% @user = current_user %>
-	<% @user.follows.each do |f| %>
-		
-		<%= f.title %>	|	<%= f.ratings %>  |	<%= f.reviews %><br />
+	<% if follows_exist?(current_user) %>
+		<% @user = current_user %>
+		<%= render "shared/index" %>
 
+	<% else %>
+		<p>Follow a book to receive rating and review notifications!</p>
 	<% end %>
-<% else %>
-	<p>Follow a book to receive rating and review notifications!</p>
-<% end %>
+
 

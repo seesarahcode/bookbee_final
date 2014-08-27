@@ -1,0 +1,37 @@
+<%= form_tag edit_multiple_user_follows_path(@user) do %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Book Title</th>
+      <th>Receive rating emails?</th>
+      <th>Receive review emails?</th>
+      <th>Unfollow</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  
+  <% @user.follows.each do |follow| %>
+  
+    <tbody>
+        <tr>
+          <td><%= follow.title %></td>
+          <td><%= check_box_tag "ratings[]", follow.id, :checked => true %></td>
+          <td><%= check_box_tag "reviews[]", follow.id, :checked => true %></td>
+          <td>
+
+          <%# link_to 'Destroy', @user.follows(follow.id), method: :delete, data: { confirm: 'Are you sure?' } %>
+
+          <%# link_to 'Delete', [@user, follow], :method => :delete %>
+
+          <%= link_to [@user, follow], method: :delete do %>
+              <i class="icon-remove"></i>
+          <% end %>
+        </td>
+        </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% end %>

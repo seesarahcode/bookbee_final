@@ -3,7 +3,12 @@ Bookbee::Application.routes.draw do
   post '/rate' => 'rater#create', :as => 'rate'
 
   resources :users do
-    resources :follows
+    resources :follows do
+      collection do
+        post 'edit_multiple'
+        post 'update_multiple'
+      end
+    end 
   end
   
   resources :invitations

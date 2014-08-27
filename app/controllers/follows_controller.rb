@@ -1,6 +1,6 @@
 class FollowsController < ApplicationController
   before_action :set_user
-  before_action :set_follow, only: [:show, :edit, :update, :destroy]
+  before_action :set_follow, only: [:show, :edit, :update]
 
   # GET /follows
   # GET /follows.json
@@ -55,12 +55,29 @@ class FollowsController < ApplicationController
   # DELETE /follows/1
   # DELETE /follows/1.json
   def destroy
+    @follow = @user.follows.find(params[:id])
     @follow.destroy
     respond_to do |format|
-      format.html { redirect_to follows_url }
+      format.html { redirect_to email_preferences_path }
       format.json { head :no_content }
     end
   end
+
+
+def edit_multiple
+  @user = User.find(params[:user_id])
+  @follows = @user.follows.find(params[:follow_ids])
+end
+
+def update_multiple
+  @user = User.find(params[:user_id])
+  @follows = @user.follows.find(params[:follow_ids])
+  @follows.each do |follow|
+    follow.update_attributes!(params[:follow].reject { |k,v| v.blank? })
+  end
+  flash[:notice] = "Updated email preferences!"
+  redirect_to email_preferences_path
+end
 
   private
     # Use callbacks to share common setup or constraints between actions.
