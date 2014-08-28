@@ -3,6 +3,7 @@ class RaterController < ApplicationController
   before_action :set_book
 
 	include SessionsHelper
+  include UsersHelper
 
   def create
     if signed_in?
@@ -10,6 +11,10 @@ class RaterController < ApplicationController
       obj.rate params[:score].to_f, current_user, params[:dimension]
       bcc_list = rating_email_list(@book)
       RatingMailer.rating_notification(bcc_list, @book).deliver
+      @owner = User.find_by_id(@book.user_id)
+      if receives_book_updates?(@owner)
+        RatingMailer.creator_notification(@owner, @book).deliver
+      end
       render :json => true
 
     else

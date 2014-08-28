@@ -10,4 +10,8 @@ module UsersHelper
 		true if user.follows.any?
 	end
 
+	def receives_book_updates?(user)
+		true if user.receive_book_updates
+	end
+
 end

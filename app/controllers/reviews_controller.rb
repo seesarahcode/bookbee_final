@@ -1,7 +1,8 @@
 class ReviewsController < ApplicationController
   before_action :set_book
   before_action :set_review, only: [:show, :edit, :update, :destroy]
-
+  
+  include UsersHelper
   # GET /reviews
   # GET /reviews.json
   def index
@@ -26,9 +27,13 @@ class ReviewsController < ApplicationController
     @review = @book.reviews.build(review_params)
     respond_to do |format|
       if @review.save
-      bcc_list = review_email_list(@book)
-      ReviewMailer.review_notification(bcc_list, @book).deliver
-       format.html { redirect_to [@book, @review], notice: 'Review was successfully created!' }
+        bcc_list = review_email_list(@book)
+        ReviewMailer.review_notification(bcc_list, @book).deliver
+        @owner = User.find_by_id(@book.user_id)
+        if receives_book_updates?(@owner)
+          ReviewMailer.creator_notification(@owner, @book).deliver
+        end
+        format.html { redirect_to [@book, @review], notice: 'Review was successfully created!' }
         format.json { render action: 'show', status: :created, location: @review }
       else
         format.html { render action: 'new' }

@@ -1,17 +1,11 @@
 class FollowsController < ApplicationController
   before_action :set_user
-  before_action :set_follow, only: [:show, :edit, :update]
+  before_action :set_follow, only: [:edit, :update]
 
   # GET /follows
   # GET /follows.json
   def index
-    @user = User.find(params[:user_id])
-    @follows = @user.follows.paginate(page: params[:follow])
-  end
-
-  # GET /follows/1
-  # GET /follows/1.json
-  def show
+    @follows = @user.follows
   end
 
   # GET /follows/new
@@ -19,9 +13,6 @@ class FollowsController < ApplicationController
     @follow = @user.follows.build
   end
 
-  # GET /follows/1/edit
-  def edit
-  end
 
   # POST /follows
   # POST /follows.json
@@ -38,15 +29,21 @@ class FollowsController < ApplicationController
     end
   end
 
+  # GET /follows/1/edit
+  def edit
+    @follow = @user.follows.find(params[:id])
+  end
+
   # PATCH/PUT /follows/1
   # PATCH/PUT /follows/1.json
   def update
     @follow = @user.follows.find(params[:id])
     respond_to do |format|
       if @follow.update_attributes(follow_params)
-        flash[:success] = "Follow status updated."
+        format.html { redirect_to email_preferences_path, notice: "Follow status updated." }
+        format.json { head :no_content }
       else
-        format.html { render action: 'edit' }
+        format.html { redirect_to email_preferences_path }
         format.json { render json: @follow.errors, status: :unprocessable_entity }
       end
     end
@@ -64,21 +61,6 @@ class FollowsController < ApplicationController
   end
 
 
-def edit_multiple
-  @user = User.find(params[:user_id])
-  @follows = @user.follows.find(params[:follow_ids])
-end
-
-def update_multiple
-  @user = User.find(params[:user_id])
-  @follows = @user.follows.find(params[:follow_ids])
-  @follows.each do |follow|
-    follow.update_attributes!(params[:follow].reject { |k,v| v.blank? })
-  end
-  flash[:notice] = "Updated email preferences!"
-  redirect_to email_preferences_path
-end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_follow
@@ -86,7 +68,7 @@ end
     end
 
     def set_user
-      @user = User.find_by_id(params[:user_id])
+      @user = current_user
     end
 
     def set_book

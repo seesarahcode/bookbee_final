@@ -1,4 +1,4 @@
-<%= form_tag edit_multiple_user_follows_path(@user) do %>
+<%# form_tag edit_multiple_user_follows_path(@user) do %>
 
 <table>
   <thead>
@@ -6,8 +6,8 @@
       <th>Book Title</th>
       <th>Receive rating emails?</th>
       <th>Receive review emails?</th>
-      <th>Unfollow</th>
       <th></th>
+      <th>Unfollow</th>
       <th></th>
     </tr>
   </thead>
@@ -15,23 +15,23 @@
   <% @user.follows.each do |follow| %>
   
     <tbody>
-        <tr>
-          <td><%= follow.title %></td>
-          <td><%= check_box_tag "ratings[]", follow.id, :checked => true %></td>
-          <td><%= check_box_tag "reviews[]", follow.id, :checked => true %></td>
+      <tr>
+      <td><%= follow.title %></td>
+      <%= form_for([@user, follow]) do |f| %>
+          <td><%= f.check_box :ratings %></td>
+          <td><%= f.check_box :reviews %></td>
           <td>
-
-          <%# link_to 'Destroy', @user.follows(follow.id), method: :delete, data: { confirm: 'Are you sure?' } %>
-
-          <%# link_to 'Delete', [@user, follow], :method => :delete %>
-
-          <%= link_to [@user, follow], method: :delete do %>
-              <i class="icon-remove"></i>
-          <% end %>
-        </td>
+            <%= f.submit "Update", class: "btn btn-small btn-success" %><% end %>
+          </td>
+          <td> 
+            <%= link_to [@user, follow], method: :delete do %>
+                <i class="icon-remove"></i>
+            <% end %>
+          </td>
         </tr>
-    <% end %>
-  </tbody>
+      <% end %>
+    </tbody>
 </table>
-
-<% end %>
+<br><br>
+<%# submit_tag "Save preferences" %>
+<%# end %>
