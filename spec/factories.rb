@@ -36,3 +36,21 @@ FactoryGirl.define do
 		img.image  fixture_file_upload( 'cover.jpg')
 	end
 end
+
+FactoryGirl.define do
+  factory :blocked_user do
+    user_id 1
+    date_blocked "2014-08-28 00:23:18"
+  end
+end
+
+FactoryGirl.define do
+  factory :follow do
+    user_id 1
+    title "MyString"
+    ratings false
+    reviews false
+    book_id 1
+  end
+end
+

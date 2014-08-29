@@ -2,9 +2,11 @@ class User < ActiveRecord::Base
   has_many :books
   has_many :follows, dependent: :destroy
   has_many :reviews, dependent: :destroy
+  has_many :blocked_users, dependent: :destroy
 
   ratyrate_rater
   accepts_nested_attributes_for :follows
+  accepts_nested_attributes_for :blocked_users
 
 	before_save { self.email = email.downcase }
 	before_create :create_remember_token
@@ -35,18 +37,6 @@ class User < ActiveRecord::Base
 
   def admin?
     true if self.admin == :true
-  end
-
-  def update_without_password(params, *options)
-    params.delete(:password)
-    params.delete(:password_confirmation)
-    result = update_attributes(params, *options)
-    clean_up_passwords
-    result
-  end
-
-  def clean_up_passwords
-    self.password = self.password_confirmation = nil
   end
 
   private

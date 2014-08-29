@@ -1,7 +1,7 @@
 module Permissions
   class UserPermission < BasePermission
     def initialize(user)
-      allow :users, [:new, :create, :edit, :update]
+      allow :users, [:new, :create, :edit, :update, :index, :destroy]
       allow :sessions, [:new, :create, :destroy]
       allow :books, [:index, :show, :new, :create]
       allow :books, [:edit, :update] do |book|

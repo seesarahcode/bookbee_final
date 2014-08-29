@@ -1,18 +1,20 @@
 Bookbee::Application.routes.draw do
 
   post '/rate' => 'rater#create', :as => 'rate'
+  
 
   resources :users do
-    resources :follows do
-      collection do
-        post 'edit_multiple'
-        post 'update_multiple'
-      end
-    end 
+    resources :follows 
+    member do
+      post 'create_blocked_user'
+      delete 'destroy_blocked_user'
+    end
   end
+
   
   resources :invitations
   resources :sessions, only: [:new, :create, :destroy]
+  
   resources :books do
     resources :reviews
   end

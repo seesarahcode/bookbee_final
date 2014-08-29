@@ -1,7 +1,7 @@
 #Bookbee
 A library management app.
 
-###Currently passing these requirements:
+###Currently passing these requirements (18/20):
 
 1.  Anyone can see all the book titles and ratings in the library
 2.  You must login to add library books
@@ -19,4 +19,5 @@ A library management app.
 14. Users can opt out of all or by book review emails 
 15. Users can configure their email preferences
 17. Books must have a picture associated with them to be approved
+18. Admins can block users from creating ratings or reviews in the system
 23. Users can invite other users

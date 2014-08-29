@@ -13,7 +13,7 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    @user.attributes = params[:user]
+    #@user.attributes = params[:user]
     @user.follows.each { |t| t.attributes = params[:follow][t.id.to_s] }
     # if user_params[:password].blank?
     #   user_params.delete(:password)
@@ -44,6 +44,9 @@ class UsersController < ApplicationController
     if signed_in?
       @feed_items = current_user.feed.paginate(page: params[:page])
     end
+    if admin?(current_user)
+      @blocked_user = @user.blocked_users.build(params[:blocked_user])
+    end
   end
 
   def new
@@ -73,12 +76,36 @@ class UsersController < ApplicationController
 
   def email_preferences
   end
+
+  def create_blocked_user
+    @user = User.find(params[:id])
+    @blocked_user = @user.blocked_users.build(blocked_user_params)
+    if @blocked_user.save
+      @blocked_user = BlockedUser.new
+    end
+    redirect_to @user
+    flash[:success] = "User blocked!"
+  end
+
+  def destroy_blocked_user
+    @user = User.find(params[:id])
+    @blocked_user = @user.blocked_users.find(params[:id])
+    @blocked_user.destroy
+    respond_to do |format|
+        format.html { redirect_to user_path(@user), notice: "User blocked!" }
+        format.json { head :no_content }
+    end
+  end
   
   private
 
   def user_params
-  	params.require(:user).permit(:name, :email, :admin,
+  	params.require(:user).permit(:name, :email, :admin, :blocked,
   															:password, :password_confirmation)
+  end
+
+  def blocked_user_params
+    params.require(:blocked_user).permit(:user_id, :date_blocked, :blocked_user_id)
   end
 
   def needs_password?(user, params)

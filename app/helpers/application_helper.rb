@@ -26,6 +26,10 @@ module ApplicationHelper
 		user.admin == true
 	end
 
+	def blocked_user?(user)
+		true if user.blocked_users.find_by_user_id(user.id)
+	end
+
 	def following?(user, book)
 		user.follows.where(book_id = book.id).exists?
 	end

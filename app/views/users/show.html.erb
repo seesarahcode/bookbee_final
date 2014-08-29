@@ -7,19 +7,28 @@
       <section>
         <%= render 'shared/invite' %>
       </section>
+
       <% if admin?(current_user) %>
-        <section>
-          <% if @user == current_user %>
-             <section>
-              <br />
-              <%= render 'shared/invite_admin' %>
-            </section>
+          <% if blocked_user?(@user) %>
+            <%= button_to "Unblock", destroy_blocked_user_user_path(@user), method: :delete, class: "btn btn-small btn-warning" %>
           <% else %>
-            <br />
-            <%# link_to "Edit profile", edit_user_path(@user) %>
+            <% unless current_user.id == @user.id %>
+              <%= form_for @blocked_user, :url => create_blocked_user_user_path(@user) do |f| %>
+                <%= f.hidden_field :user_id, :value => @user.id %>
+                <%= f.hidden_field :date_blocked, :value => Time.now %>
+              <%= f.submit "Block user", class: "btn btn-small btn-danger" %>
+              <% end %>
+            <% end %>
           <% end %>
-        </section>
+        
+          <% if @user == current_user %>
+
+              <br />
+              <%= render 'shared/invite_admin' %>          
+          <% else %>
+          <% end %>
       <% end %>
+
       <% if @user == current_user %>
         <%= link_to "Edit profile", edit_user_path(@user) %>
       <% end %>

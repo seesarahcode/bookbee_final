@@ -11,13 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140827232138) do
+ActiveRecord::Schema.define(version: 20140828072318) do
 
   create_table "average_caches", force: true do |t|
     t.integer  "rater_id"
     t.integer  "rateable_id"
     t.string   "rateable_type"
     t.float    "avg",           null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "blocked_users", force: true do |t|
+    t.integer  "user_id"
+    t.datetime "date_blocked"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -16,10 +16,5 @@ namespace :db do
     end
 
     users = User.all(limit: 6)
-    50.times do
-      content = Faker::Lorem.words(num = 3)
-      name = Faker::Lorem.words(num = 2)
-      users.each { |user| user.books.create!(title: "#{content}", author: "#{name}", isbn: "9783161484100") }
-    end
   end
 end
