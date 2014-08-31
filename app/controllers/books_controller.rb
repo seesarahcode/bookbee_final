@@ -1,8 +1,6 @@
 class BooksController < ApplicationController
 	require 'will_paginate/array'
 
-	helper :all
-
 	helper_method :sort_column, :sort_direction
 
 	def index
@@ -25,6 +23,10 @@ class BooksController < ApplicationController
 	      tag = @book.tag_words.build(:word => "#{tag_word}", :book_id => @book.id)
     		tag.save!
     	end
+    	rating_obj = RatingCache.find_by_cacheable_id(@book.id)
+	    new_rating = rating_obj.avg
+	    @book.last_avg_rating = new_rating.to_s
+	    @book.save!
       flash[:success] = "Book created!"
       redirect_to root_url
     else
@@ -50,6 +52,10 @@ class BooksController < ApplicationController
 	      tag = @book.tag_words.build(:word => "#{tag_word}", :book_id => @book.id)
     		tag.save!
     	end
+	    rating_obj = RatingCache.find_by_cacheable_id(@book.id)
+	    new_rating = rating_obj.avg
+	    @book.last_avg_rating = new_rating.to_s
+	    @book.save!
       flash[:success] = "Book updated!"
       redirect_to @book
     else

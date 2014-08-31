@@ -1,6 +1,6 @@
 class RaterController < ApplicationController
-
   before_action :set_book
+  after_action :set_book_rating_avg
 
 	include SessionsHelper
   include UsersHelper
@@ -16,7 +16,6 @@ class RaterController < ApplicationController
         RatingMailer.creator_notification(@owner, @book).deliver
       end
       render :json => true
-
     else
       render :json => false
     end
@@ -26,6 +25,13 @@ class RaterController < ApplicationController
 
   def set_book
     @book = Book.find_by_id(params[:id])
+  end
+
+  def set_book_rating_avg
+    rating_obj = RatingCache.find_by_cacheable_id(@book.id)
+    new_rating = rating_obj.avg
+    @book.last_avg_rating = new_rating.to_s
+    @book.save!
   end
 
   def rating_email_list(book)

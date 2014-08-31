@@ -27,20 +27,17 @@ class Book < ActiveRecord::Base
   	self.save
   end
 
-  def self.rating_average
-  	RatingCache.find_by_cacheable_id(self.id)
-  end
-
-
   def self.search(search)
 	  if search
 	    find(:all, :conditions => ['books.title LIKE ?
             OR books.author LIKE ?
             OR books.isbn LIKE ?
+            OR books.last_avg_rating LIKE ?
             OR tag_words.word LIKE ?
             OR reviews.title LIKE?
             OR reviews.text LIKE?
             OR reviews.fave_quote LIKE?',
+            "%#{search}%",
             "%#{search}%",
             "%#{search}%",
             "%#{search}%",

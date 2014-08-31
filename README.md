@@ -20,4 +20,5 @@ A library management app.
 15. Users can configure their email preferences
 17. Books must have a picture associated with them to be approved
 18. Admins can block users from creating ratings or reviews in the system
+19. Books should be searchable by title, author, ISBN, tags, ratings, and reviews
 23. Users can invite other users
