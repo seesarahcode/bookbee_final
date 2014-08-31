@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140828072318) do
+ActiveRecord::Schema.define(version: 20140831093530) do
 
   create_table "average_caches", force: true do |t|
     t.integer  "rater_id"
@@ -104,6 +104,13 @@ ActiveRecord::Schema.define(version: 20140828072318) do
     t.datetime "updated_at"
     t.integer  "user_id"
     t.integer  "book_id"
+  end
+
+  create_table "tag_words", force: true do |t|
+    t.integer  "book_id"
+    t.string   "word"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "taggings", force: true do |t|

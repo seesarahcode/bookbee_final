@@ -1,6 +1,4 @@
 module BooksHelper
-	
-	include ActsAsTaggableOn::TagsHelper
 
 	def approved?(book)
 		book.approved == true
@@ -27,5 +25,11 @@ module BooksHelper
 		end
 	end
 
+	def set_tags(book)
+		book.tags.each do |t|
+			tag_word = t.name.to_s
+			TagWord.new(:tag_word => "#{tag_word}", :book_id => book.id)
+		end
+	end
 
 end

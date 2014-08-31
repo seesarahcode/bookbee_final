@@ -15,7 +15,7 @@
   <%= @review.fave_quote %>
 </p>
 
-<td><%= link_to 'Edit review', edit_book_review_path %></td>
-<td><%= link_to 'Delete review', book_review_path, method: :delete, data: { confirm: "Are you sure you want to delete this review?"} %></td>
+<td><%= link_to 'Edit review', edit_book_review_path %></td><br>
+<td><%= link_to 'Delete review', book_review_path, method: :delete, data: { confirm: "Are you sure you want to delete this review?"} %></td><br>
 
 <td><%= link_to 'Back to the book', @book %></td>

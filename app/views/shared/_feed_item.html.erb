@@ -1,6 +1,6 @@
 <li id="<%= feed_item.id %>">
     <span class="content"><%= image_tag feed_item.cover_url(:thumb) if feed_item.cover? %></span>
-    <span class="content"><%= feed_item.title %></span>
+    <span class="content"><%= link_to feed_item.title, book_path(feed_item) %></span>
     <span class="content"><%= feed_item.author %></span>
     <span class="content"><%= feed_item.isbn %></span>
     <span class="content">Approved status: <%= feed_item.approved %></span>

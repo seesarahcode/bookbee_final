@@ -1,25 +1,52 @@
 <% provide(:title, 'All books') %>
 <h1>Library</h1>
 
+<%= form_tag books_path, :method => 'get', :id => "books_search" do %>
+  <p>
+    <%= text_field_tag :search, params[:search] %>
+    <%= submit_tag "Search", :name => nil %>
+  </p>
+  <div id="books"><%= render 'books' %></div>
+<% end %>
+
 <%= will_paginate %>
 
-<ul class="books">
-  <% @books.each do |book| %>
-    <% if signed_in? %>
-	 		<li>
-	    	<%= image_tag book.cover_url(:thumb) if book.cover? %> <br /><br />
-	      <%= link_to book.title, book %>
-	      <p> Rating: <%= average_rating(book) %> </p>      
-	    </li>
-	  <% else %>
-	 		<li>
-	    	<%= image_tag book.cover_url(:thumb) if book.cover? %> <br /><br />
-	      <%= book.title %>
-	      <p> Rating: <%= average_rating(book) %> </p>    
-	      <%= link_to "Sign up to see more!", new_user_path %>
-	    </li>
+
+<table class="books">
+	<thead>
+		<th></th>
+		<th><%= sortable "Title" %></th>
+		<th><%= sortable "Author" %></th>
+		<th><%= sortable "Avg. Rating" %></th>
+		<th><%= sortable "ISBN" %></th>
+		<th><%= sortable "Tags" %></th>
+		<th><%= sortable "Latest Review" %></th>
+	</thead>
+	<tbody>
+	 <% for book in @books %>
+	    <% if signed_in? %>
+		    <tr>
+		    	<td><%= image_tag book.cover_url(:thumb) if book.cover? %></td>
+		      <td><%= link_to book.title, book %></td>
+		      <td><%= link_to book.author, book %></td>
+		      <td><%= average_rating(book) %></td>
+		      <td><%= link_to book.isbn, book %></td>
+		      <td><%= link_to book.tag_list, book %></td>
+		      <td><% unless book.reviews.last.nil? %>
+		      			<%= link_to "#{book.reviews.last.title}", book_path(book) %>
+		      		<% end %>
+		       </td>
+		    </tr>
+		  <% else %>
+		    	<td><%= image_tag book.cover_url(:thumb) if book.cover? %></td>
+		    	<td><%= book.title %></td>
+		    	<td></td>
+		    	<td><%= average_rating(book) %></td>
+		    	<td colspan="3"><%= link_to "Sign up to see more!", new_user_path %></td>
+		  <% end %>
 	  <% end %>
-  <% end %>
-</ul>
+	</tbody>
+</table>
+
 
 <%= will_paginate %>

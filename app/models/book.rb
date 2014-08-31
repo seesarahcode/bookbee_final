@@ -1,13 +1,13 @@
 class Book < ActiveRecord::Base
 	belongs_to :user
 	has_many :reviews
+  has_many :tag_words
 
 	ratyrate_rateable "book_rating"
 	acts_as_taggable_on :tags
 
 	accepts_nested_attributes_for :reviews
 	
-	default_scope -> { order('created_at DESC')}
 	scope :approved, -> { where(approved: true) }
 	scope :pending_approval, -> { where(approved: false) }
 
@@ -15,6 +15,7 @@ class Book < ActiveRecord::Base
 	validates :isbn, presence: true, length: { maximum: 17 }
 
 	mount_uploader :cover, CoverUploader
+
 
 	def approve!
 	  self.approved = true
@@ -25,5 +26,33 @@ class Book < ActiveRecord::Base
   	self.deactived = true
   	self.save
   end
+
+  def self.rating_average
+  	RatingCache.find_by_cacheable_id(self.id)
+  end
+
+
+  def self.search(search)
+	  if search
+	    find(:all, :conditions => ['books.title LIKE ?
+            OR books.author LIKE ?
+            OR books.isbn LIKE ?
+            OR tag_words.word LIKE ?
+            OR reviews.title LIKE?
+            OR reviews.text LIKE?
+            OR reviews.fave_quote LIKE?',
+            "%#{search}%",
+            "%#{search}%",
+            "%#{search}%",
+            "%#{search}%",
+            "%#{search}%",
+            "%#{search}%",
+            "%#{search}%"],
+            :include => [:reviews, :tag_words]
+          )
+	  else
+	    scoped
+	  end
+	end
 
 end

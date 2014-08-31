@@ -100,3 +100,18 @@ aside {
     margin-bottom: 5px;
   }
 }
+
+
+.books th .current {
+  padding-right: 12px;
+  background-repeat: no-repeat;
+  background-position: right center;
+}
+
+.books th .asc {
+  background-image: url(/images/up_arrow.gif);
+}
+
+.books th .desc {
+  background-image: url(/images/down_arrow.gif);
+}
