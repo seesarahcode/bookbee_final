@@ -1,5 +1,16 @@
+[![Code Climate](https://codeclimate.com/github/sarahwheeler/bookbee_final/badges/gpa.svg)](https://codeclimate.com/github/sarahwheeler/bookbee_final)
+
+[![Build Status](https://travis-ci.org/sarahwheeler/bookbee_final.svg?branch=master)](https://travis-ci.org/sarahwheeler/bookbee_final)
+
+
+
+
 #Bookbee
 A library management app.
+
+## Set up
+
+Coming soon...
 
 ###Currently passing these requirements (18/20):
 
