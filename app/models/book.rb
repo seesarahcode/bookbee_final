@@ -8,6 +8,7 @@ class Book < ActiveRecord::Base
 
 	accepts_nested_attributes_for :reviews
 	
+  default_scope { order("last_avg_rating DESC") }
 	scope :approved, -> { where(approved: true) }
 	scope :pending_approval, -> { where(approved: false) }
 

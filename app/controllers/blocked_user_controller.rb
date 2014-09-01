@@ -4,7 +4,7 @@ class BlockedUserController < ApplicationController
 
 	def index
 		@user = User.find(params[:user_id])
-		@blocked_users = @user.blocked_users(params[:blocked_users)
+		@blocked_users = @user.blocked_users(params[:blocked_users])
 	end
 
 	def new

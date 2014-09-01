@@ -2,11 +2,13 @@
   <div class="row">
     <aside class="span4">
       <section>
-        <%= render 'user_info' %>
-      </section>
-      <section>
+        <br>
+        <%= render 'user_info' %><br>
+        <% if @user == current_user %>
+          <%= link_to "Edit profile", edit_user_path(@user) %><br>
+          <%= "Email preferences: #{@user.email_frequency}" %>
+        <% end %>
         <%= render 'shared/invite' %>
-      </section>
 
       <% if admin?(current_user) %>
           <% if blocked_user?(@user) %>
@@ -29,9 +31,7 @@
           <% end %>
       <% end %>
 
-      <% if @user == current_user %>
-        <%= link_to "Edit profile", edit_user_path(@user) %>
-      <% end %>
+      </section>
     </aside>
 
    <div class="span8">

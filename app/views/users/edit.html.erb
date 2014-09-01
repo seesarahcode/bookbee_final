@@ -12,23 +12,24 @@
       <%= f.label :email %>
       <%= f.text_field :email %>
 
-      <%= f.label :password %>
+      <%= f.label :password, "Enter Password" %>
       <%= f.password_field :password %>
 
       <%= f.label :password_confirmation, "Confirm Password" %>
       <%= f.password_field :password_confirmation %>
 
+
       <% if admin?(current_user) %>
         <%= f.label :admin, "Give admin privileges?" %>
-         <%= f.check_box :admin %>
+         <%= f.check_box :admin %><br>
       <% end %>
 
-      <h3> Email Preferences <h3>
+      <%= f.label :email_frequency, "Email Frequency Preferences" %>
+      <%= f.select :email_frequency, options_for_select([['Individual', :individual], ['Daily', :daily]]) %><br>
+
 
       <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
     <% end %>
 
-    <%= gravatar_for @user %>
-    <a href="http://gravatar.com/emails">Change</a>
   </div>
 </div>

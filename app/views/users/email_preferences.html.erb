@@ -1,17 +1,9 @@
-<% provide(:title, 'Email Preferences') %>
+<% provide(:title, 'Follow Preferences') %>
 
-<h1>Email Preferences</h1>
-
-<p> Receive emails when your books are rated or reviewed? </p>
-
-
-<h3>Frequency</h3>
-
-
-<h3>Follows</h3>
+<h1>Follow Preferences</h1>
 
 	<% if follows_exist?(current_user) %>
-		<% @user = current_user %>
+		
 		<%= render "shared/index" %>
 
 	<% else %>

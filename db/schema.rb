@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140831113713) do
+ActiveRecord::Schema.define(version: 20140901081529) do
 
   create_table "average_caches", force: true do |t|
     t.integer  "rater_id"
@@ -143,6 +143,7 @@ ActiveRecord::Schema.define(version: 20140831113713) do
     t.string   "remember_token"
     t.boolean  "admin",                default: false
     t.boolean  "receive_book_updates", default: true
+    t.string   "email_frequency",      default: "individual"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

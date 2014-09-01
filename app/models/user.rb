@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   has_many :reviews, dependent: :destroy
   has_many :blocked_users, dependent: :destroy
 
+
   ratyrate_rater
   accepts_nested_attributes_for :follows
   accepts_nested_attributes_for :blocked_users
@@ -20,7 +21,7 @@ class User < ActiveRecord::Base
   	format: { with: VALID_EMAIL_REGEX }
 
 	has_secure_password
-  validates :password, length: { minimum: 6 }
+  validate :validate_password_length
 
   def User.new_remember_token
   	SecureRandom.urlsafe_base64
@@ -37,6 +38,10 @@ class User < ActiveRecord::Base
 
   def admin?
     true if self.admin == :true
+  end
+
+  def validate_password_length
+    !new_record? || password.length >= 6
   end
 
   private

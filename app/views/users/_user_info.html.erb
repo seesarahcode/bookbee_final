@@ -2,9 +2,10 @@
 <h1>
   <%= @user.name %>
 </h1>
-<span>
-  <%= link_to "View profile", @user %>
-</span>
+<br>
 <span>
   <%= pluralize(@user.books.count, "Book") %>
+</span><br>
+<span>
+  <%= link_to "View profile", @user %>
 </span>

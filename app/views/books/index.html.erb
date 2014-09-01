@@ -9,18 +9,16 @@
   <div id="books"><%= render 'books' %></div>
 <% end %>
 
-<%= will_paginate %>
 
-
-<table class="books">
+<table id="books">
 	<thead>
 		<th></th>
-		<th><%= sortable "Title" %></th>
-		<th><%= sortable "Author" %></th>
-		<th><%= sortable "Avg. Rating" %></th>
-		<th><%= sortable "ISBN" %></th>
-		<th><%= sortable "Tags" %></th>
-		<th><%= sortable "Latest Review" %></th>
+		<th>Title</th>
+		<th>Author</th>
+		<th>Avg. Rating</th>
+		<th>ISBN</th>
+		<th>Tags</th>
+		<th>Latest Review</th>
 	</thead>
 	<tbody>
 	 <% for book in @books %>

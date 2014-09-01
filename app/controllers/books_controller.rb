@@ -1,14 +1,15 @@
 class BooksController < ApplicationController
 	require 'will_paginate/array'
 
-	helper_method :sort_column, :sort_direction
-
 	def index
 		@books = Book.where(:approved => true)
 		@books = @books.search(params[:search])
-		@books = @books.sort_by(&:"#{sort_column}")
-		@books = @books.reverse if sort_direction == 'DESC'
-		@books = @books.paginate(:page => params[:page], :per_page => 5)
+		@books = @books.paginate(:page => params[:page], :per_page => 5)			
+	
+		respond_to do |format|
+      format.html
+      format.json {render json: Book.all.to_json(only: [:title, :author, :isbn, :last_avg_rating, ])}
+    end
 	end
 
 	def new
@@ -23,10 +24,6 @@ class BooksController < ApplicationController
 	      tag = @book.tag_words.build(:word => "#{tag_word}", :book_id => @book.id)
     		tag.save!
     	end
-    	rating_obj = RatingCache.find_by_cacheable_id(@book.id)
-	    new_rating = rating_obj.avg
-	    @book.last_avg_rating = new_rating.to_s
-	    @book.save!
       flash[:success] = "Book created!"
       redirect_to root_url
     else
@@ -53,9 +50,11 @@ class BooksController < ApplicationController
     		tag.save!
     	end
 	    rating_obj = RatingCache.find_by_cacheable_id(@book.id)
-	    new_rating = rating_obj.avg
-	    @book.last_avg_rating = new_rating.to_s
-	    @book.save!
+	    unless rating_obj.nil?
+		    new_rating = rating_obj.avg
+		    @book.last_avg_rating = new_rating.to_s
+		    @book.save!
+		  end
       flash[:success] = "Book updated!"
       redirect_to @book
     else
@@ -96,14 +95,6 @@ class BooksController < ApplicationController
 	def book_params
 		params.require(:book).permit(:title, :author, :isbn, 
 			:cover, :remote_cover_url, :approved, :tag_list)
-	end
-
-	def sort_column
-		Book.column_names.include?(params[:sort]) ? params[:sort] : "title"
-	end
-
-	def sort_direction
-		%w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
 	end
 
 end

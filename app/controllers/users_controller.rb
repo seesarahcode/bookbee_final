@@ -15,24 +15,13 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     #@user.attributes = params[:user]
     @user.follows.each { |t| t.attributes = params[:follow][t.id.to_s] }
-    # if user_params[:password].blank?
-    #   user_params.delete(:password)
-    #   user_params.delete(:password_confirmation)
-    # end
-
-    # successfully_updated = if needs_password?(@user, user_params)
-    #                          @user.update(user_params)
-    #                        else
-    #                          params[:user].delete(:password)
-    #                          params[:user].delete(:password_confirmation)
-    #                          @user.update_without_password(user_params)
-    #                        end
-
     if @user.valid? && @user.follows.all?(&:valid?)
-      @user.save!
-      @user.follows.each(&:save!)
-      flash[:success] = "Profile updated!"
-      redirect_to email_preferences_path
+      if @user.update_attributes(user_params)
+        @user.save!
+        @user.follows.each(&:save!)
+        flash[:success] = "Profile updated!"
+        redirect_to @user
+      end
     else
       render 'edit'
     end
@@ -75,6 +64,7 @@ class UsersController < ApplicationController
   end
 
   def email_preferences
+    @user = User.find(params[:id])
   end
 
   def create_blocked_user
@@ -100,7 +90,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-  	params.require(:user).permit(:name, :email, :admin, :blocked,
+  	params.require(:user).permit(:name, :email, :admin, :blocked, :email_frequency,
   															:password, :password_confirmation)
   end
 
@@ -127,6 +117,12 @@ class UsersController < ApplicationController
 
   def admin_user
     redirect_to(root_url) unless admin?(current_user)
+  end
+
+  def skip_password_attribute
+    if params[:password].blank? && params[:password_validation].blank?
+      params.except!(:password, :password_validation)
+    end
   end
 
 end

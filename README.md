@@ -12,7 +12,7 @@ A library management app.
 
 Coming soon...
 
-###Currently passing these requirements (18/20):
+###Currently passing these requirements (19/20):
 
 1.  Anyone can see all the book titles and ratings in the library
 2.  You must login to add library books

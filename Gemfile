@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 # Core
 gem 'rails', '4.0.8'
+gem 'haml-rails'
 
 # Authorization
 gem 'bcrypt-ruby', '3.1.2'
@@ -11,6 +12,7 @@ gem 'rmagick'
 gem 'carrierwave'
 gem 'ratyrate'
 gem 'acts-as-taggable-on'
+
 
 group :development, :test do
 	gem 'sqlite3', '1.3.8'
@@ -25,15 +27,17 @@ group :test do
 	gem 'capybara', '2.1.0'
 end
 
+
 # Front-end
 gem 'bootstrap-sass', '2.3.2.0'
-gem 'sass-rails'
 gem 'sprockets', '2.11.0'
-gem 'uglifier', '2.1.1'
-gem 'coffee-rails', '~> 4.0.0'
-gem 'jquery-rails'
 gem 'jbuilder', '~> 1.2'
 gem 'will_paginate', '3.0.4'
+gem 'sass-rails'
+gem 'coffee-rails', '~> 4.0.0'
+gem 'uglifier', '2.1.1'
+gem 'jquery-rails'
+
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
