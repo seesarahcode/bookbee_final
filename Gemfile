@@ -12,6 +12,7 @@ gem 'rmagick'
 gem 'carrierwave'
 gem 'ratyrate'
 gem 'acts-as-taggable-on'
+gem 'rufus-scheduler', '~> 3.0.9'
 
 
 group :development, :test do

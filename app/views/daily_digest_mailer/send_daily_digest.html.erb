@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Hello and huzzah!</h1>
+    <p>
+      Bookbee's buzzing, and we wanted to keep you up-to-date on the latest. <br />
+    </p>
+    <p>These books have received new ratings:</p>
+    
+      <% @rating_events.each do |e| %>
+        <% @rated_book = Book.find_by_id(e.book_id) %>
+        <%= @rated_book.title %>
+      <% end %> 
+
+    <p>These books have received new reviews:</p>
+
+      <% @review_events.each do |e| %>
+        <% @reviewed_book = Book.find_by_id(e.book_id) %>
+        <%= @reviewed_book.title %>
+      <% end %>
+
+    <p>Thanks for joining us at Bookbee and have a great day!</p> <br />
+    <small> 
+      To change your email notification settings or unsubscribe from these updates, you can visit your preferences page on Bookbee.
+    </small>
+  </body>
+</html>

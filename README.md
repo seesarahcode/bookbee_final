@@ -29,7 +29,10 @@ Coming soon...
 13. Users can opt out of all or by book rating emails 
 14. Users can opt out of all or by book review emails 
 15. Users can configure their email preferences
+16. Users can ask to receive a daily digest of email notifications instead of individual notifications
 17. Books must have a picture associated with them to be approved
 18. Admins can block users from creating ratings or reviews in the system
 19. Books should be searchable by title, author, ISBN, tags, ratings, and reviews
+21. Book listings are paginated (but no sorting or pagination for ratings)
+22. Admins can invite other admins (but not create)
 23. Users can invite other users

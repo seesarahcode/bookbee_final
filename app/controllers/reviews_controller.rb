@@ -1,6 +1,7 @@
 class ReviewsController < ApplicationController
   before_action :set_book
   before_action :set_review, only: [:show, :edit, :update, :destroy]
+  after_action :send_individual_emails, only: [:create, :edit, :update]
   
   include UsersHelper
   # GET /reviews
@@ -27,12 +28,6 @@ class ReviewsController < ApplicationController
     @review = @book.reviews.build(review_params)
     respond_to do |format|
       if @review.save
-        bcc_list = review_email_list(@book)
-        ReviewMailer.review_notification(bcc_list, @book).deliver
-        @owner = User.find_by_id(@book.user_id)
-        if receives_book_updates?(@owner)
-          ReviewMailer.creator_notification(@owner, @book).deliver
-        end
         format.html { redirect_to [@book, @review], notice: 'Review was successfully created!' }
         format.json { render action: 'show', status: :created, location: @review }
       else
@@ -89,26 +84,56 @@ class ReviewsController < ApplicationController
     end
 
     # Returns BCC list
-  def review_email_list(book)
+  def review_individual_email_list(book)
     # email list to return at the end
-    @bcc = []
+    @bcc_individual = []
     # search through every user and find
     User.all.each do |u|
-      # if User has a Follow that matches this book
-      if following?(u, book)
-      # and follow's rating is set to true
+      # if User has a Follow that matches this book and receives individual emails
+      if following?(u, book) && u.email_frequency == :individual
+        # and follow's reviews are set to true
         Follow.all.each do |f|
           if f.reviews == true
             # add to bcc
-            @bcc << u.email
+            @bcc_individual << u.email
           end
         end
+      elsif following?(u, book) && u.email_frequency == :daily
+        create_digest_events(book)
       end
     end
-    return @bcc
+    return @bcc_individual
   end
 
   def following?(user, book)
     user.follows.where(book_id = book.id).exists?
   end
+
+  def send_individual_emails
+    bcc_list = review_individual_email_list(@book)
+    # for everyone 
+    ReviewMailer.review_notification(bcc_list, @book).deliver
+    @owner = User.find_by_id(@book.user_id)
+    # Add owner to list?
+    if receives_book_updates?(@owner)
+      ReviewMailer.creator_notification(@owner, @book).deliver
+    end
+  end
+
+  def create_digest_events(book)
+    # search through every user and find
+    User.all.each do |u|
+      # if User has a Follow that matches this book and receives daily emails
+      if following?(u, book) && u.email_frequency == :daily
+          # and follow's reviews are set to true
+          Follow.all.each do |f|
+            if f.reviews == true
+              new_event = DailyDigestEvent.new(:user_id => u.id, :book_id => book.id, :update_type => :review)
+              new_event.save!
+            end
+          end
+      end
+  end
+end
+
 end

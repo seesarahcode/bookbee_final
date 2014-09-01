@@ -129,6 +129,8 @@ GEM
       rspec-expectations (~> 2.13.0)
       rspec-mocks (~> 2.13.0)
     rubyzip (0.9.9)
+    rufus-scheduler (3.0.9)
+      tzinfo
     sass (3.2.19)
     sass-rails (4.0.3)
       railties (>= 4.0.0, < 5.0)
@@ -194,6 +196,7 @@ DEPENDENCIES
   ratyrate
   rmagick
   rspec-rails (= 2.13.1)
+  rufus-scheduler (~> 3.0.9)
   sass-rails
   sdoc
   selenium-webdriver (= 2.35.1)

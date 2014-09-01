@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140901081529) do
+ActiveRecord::Schema.define(version: 20140901101800) do
 
   create_table "average_caches", force: true do |t|
     t.integer  "rater_id"
@@ -43,6 +43,14 @@ ActiveRecord::Schema.define(version: 20140901081529) do
   end
 
   add_index "books", ["user_id", "created_at"], name: "index_books_on_user_id_and_created_at"
+
+  create_table "dailydigestevents", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "book_id"
+    t.string   "update_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "follows", force: true do |t|
     t.integer  "user_id"
