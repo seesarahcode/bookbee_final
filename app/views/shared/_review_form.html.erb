@@ -1,7 +1,10 @@
 <br />
+<p> Your rating: 
+    <%= rating_for @book, "book_rating", :disable_after_rate => true %></p>
 <%= form_for([@book, @book.reviews.new]) do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
   <div class="field">
+    
 
     <%= f.label :title, "Title:" %>
     <%= f.text_field :title, placeholder: "Title of Review" %>

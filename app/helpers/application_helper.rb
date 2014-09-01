@@ -34,46 +34,6 @@ module ApplicationHelper
 		user.follows.where(book_id = book.id).exists?
 	end
 
-# Returns BCC list
-	def rating_email_list(book)
-		# email list to return at the end
-		@bcc = []
-		# search through every user and find
-		User.all.each do |u|
-			# if User has a Follow that matches this book
-			if following?(u, book)
-			# and follow's rating is set to true
-				Follow.all.each do |f|
-					if f.ratings == true
-						# add to bcc
-						bcc << u.email
-					end
-				end
-			end
-		end
-		return @bcc
-	end
-
-# Returns BCC list
-	def review_email_list(book)
-		# email list to return at the end
-		@bcc = []
-		# search through every user and find
-		User.all.each do |u|
-			# if User has a Follow that matches this book
-			if following?(u, book)
-			# and follow's rating is set to true
-				Follow.all.each do |f|
-					if f.reviews == true
-						# add to bcc
-						bcc << u.email
-					end
-				end
-			end
-		end
-		return @bcc
-	end
-
 	def set_tags(book)
     book.tags.each do |t|
       tag_word = t.name.to_s

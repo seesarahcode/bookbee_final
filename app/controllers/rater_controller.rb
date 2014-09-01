@@ -1,5 +1,6 @@
 class RaterController < ApplicationController
   before_action :set_book
+  skip_before_filter  :verify_authenticity_token
   after_action :set_book_rating_avg, :send_individual_emails
 
 	include SessionsHelper
@@ -9,7 +10,7 @@ class RaterController < ApplicationController
     if signed_in?
       obj = params[:klass].classify.constantize.find(params[:id])
       obj.rate params[:score].to_f, current_user, params[:dimension]
-      bcc_list = rating_email_list(@book)
+      bcc_list = rating_individual_email_list(@book)
       RatingMailer.rating_notification(bcc_list, @book).deliver
       @owner = User.find_by_id(@book.user_id)
       if receives_book_updates?(@owner)
@@ -29,9 +30,7 @@ class RaterController < ApplicationController
 
   def set_book_rating_avg
     rating_obj = RatingCache.find_by_cacheable_id(@book.id)
-    if rating_obj.nil?
-      @book.last_avg_rating = 0.0
-    else
+    unless rating_obj.nil?
       new_rating = rating_obj.avg
       @book.last_avg_rating = new_rating.to_s
       @book.save!

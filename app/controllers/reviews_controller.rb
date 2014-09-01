@@ -51,8 +51,8 @@ class ReviewsController < ApplicationController
         format.html { redirect_to [@book, @review], notice: 'Review was successfully updated!' }
         format.json { head :no_content }
       else
-        format.html { render action: 'edit' }
-        format.json { render json: @review.errors, status: :unprocessable_entity }
+        redirect_to edit_book_review_path(@book, @review)
+        flash[:errors] = "Something went wrong."
       end
     end
   end

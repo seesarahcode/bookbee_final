@@ -4,17 +4,20 @@
 	<div class="span4">
 		<p><%= image_tag @book.cover_url(:thumb) if @book.cover? %>        
       <%= render 'shared/follow_form' %></p>
+    <h4><%= "Average rating: #{@book.last_avg_rating}" %></h4>
     <p>Title: <%= @book.title %> </p>
     <p>Author: <%= @book.author %> </p>
     <p>ISBN: <%= @book.isbn %> </p>
-    <p> Tags: </p>
+    <p> Tags: 
     <% if @book.tags.any? %>
       <% @book.tags.each do |tag| %>
-      <%= link_to tag.name, tagged_url(:tag => tag.name) %>
+      <%= link_to tag.name, tagged_url(:tag => tag.name) %> | 
       <% end %>
     <% end %>
-
-    <p>Posted by <%= link_to "#{@user.name}", user_path(@user.id) %></p>
+    </p>
+    <% @creator = User.find_by_id(@book.user_id) %>
+    <% %>
+    <p>Posted by <%= link_to "#{@creator.name}", user_path(@creator.id) %></p><br><br>
 
     <% if deactivated?(@book) %>
 
@@ -29,7 +32,6 @@
         <% if @book.approved == false %>
     			<%= render 'approval' %>
     		<% else %>
-    			<%= rating_for @book, "book_rating", :disable_after_rate => true %>
     			<%= render 'edit_links' %>
     			<%= link_to 'Back', root_path %><br />
     			<%= link_to "Add a review", new_book_review_path(@book) %>
@@ -42,7 +44,6 @@
         <%= render 'reviews' %>
 
       <% elsif current_user.id == @book.user_id %>
-  		  <%= rating_for @book, "book_rating", :disable_after_rate => true %>
   			<% render 'edit_links' %>
   			<%= link_to 'Back', root_path %><br />
   			<%= link_to "Add a review", new_book_review_path(@book) %>
@@ -50,8 +51,7 @@
 				<%= render 'reviews' %>
 			<% else %>
         <% unless admin?(current_user) %>
-          <%= rating_for @book, "book_rating", :disable_after_rate => true %>
-    			<%= link_to "Add a review", new_book_review_path(@book) %>
+    			<%= link_to "Add a review", new_book_review_path(@book) %> | 
           <%= link_to 'Back', root_path %><br />
   				<br />
   				<%= render 'reviews' %>

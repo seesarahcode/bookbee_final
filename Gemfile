@@ -2,7 +2,6 @@ source 'https://rubygems.org'
 
 # Core
 gem 'rails', '4.0.8'
-gem 'haml-rails'
 
 # Authorization
 gem 'bcrypt-ruby', '3.1.2'

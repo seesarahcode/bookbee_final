@@ -19,11 +19,7 @@ class BooksController < ApplicationController
 	def create
 		@book = current_user.books.build(book_params)
     if @book.save
-    	@book.tags.each do |t|
-	      tag_word = t.name.to_s
-	      tag = @book.tag_words.build(:word => "#{tag_word}", :book_id => @book.id)
-    		tag.save!
-    	end
+    	tag_word_build(@book)
       flash[:success] = "Book created!"
       redirect_to root_url
     else
@@ -44,17 +40,8 @@ class BooksController < ApplicationController
 	def update
     @book = Book.find(params[:id])
     if @book.update_attributes(book_params)
-    	@book.tags.each do |t|
-	      tag_word = t.name.to_s
-	      tag = @book.tag_words.build(:word => "#{tag_word}", :book_id => @book.id)
-    		tag.save!
-    	end
-	    rating_obj = RatingCache.find_by_cacheable_id(@book.id)
-	    unless rating_obj.nil?
-		    new_rating = rating_obj.avg
-		    @book.last_avg_rating = new_rating.to_s
-		    @book.save!
-		  end
+    	tag_word_build(@book)
+	    update_rating(@book)
       flash[:success] = "Book updated!"
       redirect_to @book
     else
@@ -95,6 +82,23 @@ class BooksController < ApplicationController
 	def book_params
 		params.require(:book).permit(:title, :author, :isbn, 
 			:cover, :remote_cover_url, :approved, :tag_list)
+	end
+
+	def tag_word_build(book)
+		book.tags.each do |t|
+      tag_word = t.name.to_s
+      tag = book.tag_words.build(:word => "#{tag_word}", :book_id => book.id)
+  		tag.save!
+    end
+	end
+
+	def update_rating(book)
+		rating_obj = RatingCache.find_by_cacheable_id(book.id)
+	  unless rating_obj.nil?
+	    new_rating = rating_obj.avg
+	    book.last_avg_rating = new_rating.to_s
+	    book.save!
+		end
 	end
 
 end
