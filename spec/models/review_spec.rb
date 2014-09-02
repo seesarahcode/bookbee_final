@@ -1,9 +1,11 @@
 require 'spec_helper'
 
 describe Review do
-  let(:user) { FactoryGirl.create(:user) }
-  let(:book) { FactoryGirl.create(:book) }
-  let(:review) { FactoryGirl.create(:review) }
+  before :each do
+    @book = Book.new(title: "American Gods", author: "Neil Gaiman", 
+      isbn: "9783161484100", user_id: 808, :id => 42)
+    @review = @book.reviews.new(:title=>"Pretty Good", :text=> "Enjoyed it a lot.", :fave_quote=> "Quote here.", :user_id=>101, :book_id=>42)
+  end
 
   subject { @review }
 
@@ -11,9 +13,7 @@ describe Review do
 	it { should respond_to(:text)}
 	it { should respond_to(:fave_quote) }
   it { should respond_to(:user_id) }
-  it { should respond_to(:book) }
-  its(:user) { should eq user }
-  its(:book) { should eq book }
+  it { should respond_to(:book_id) }
 
   it { should be_valid }
 

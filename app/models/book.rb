@@ -24,7 +24,7 @@ class Book < ActiveRecord::Base
   end
 
   def deactivate!
-  	self.deactived = true
+  	self.deactivated = true
   	self.save
   end
 

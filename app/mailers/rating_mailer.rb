@@ -14,7 +14,7 @@ class RatingMailer < ActionMailer::Base
   	@owner = user
   	@book = book
     @book_page = "http://example.com/book/#{@book.id}/"
-  	mail(to: @owner.email, subject: "Your book #{@book.title} has been reviewed on Bookbee!")
+  	mail(to: @owner.email, subject: "Your book #{@book.title} has been rated on Bookbee!")
   end
 
 

@@ -10,9 +10,26 @@ A library management app.
 
 ## Set up
 
-Coming soon...
+Navigate to where you'd like to save the app in terminal, and:
 
-###Currently passing these requirements (19/20):
+	git clone https://github.com/sarahwheeler/bookbee_final.git
+
+	bundle install
+
+That's it!
+
+#### To Set Up Admin:
+
+Go to app in terminal:
+
+	rails c
+
+	new_admin = User.new(:name => "You", :email => "you@you.com", :password=>"password", :password_confirmation => "password", :admin => true)
+
+	new_admin.save!
+
+
+###Currently passing these requirements (20.5-ish/20):
 
 1.  Anyone can see all the book titles and ratings in the library
 2.  You must login to add library books
@@ -36,3 +53,27 @@ Coming soon...
 21. Book listings are paginated (but no sorting or pagination for ratings)
 22. Admins can invite other admins (but not create)
 23. Users can invite other users
+
+### And also these requirements:
+
+1.  80% of the above items implemented (20.5/25)
+		Done!
+
+2.  Code Climate grades = your grade on the project (need a 3.0 or better to pass)
+		Done!
+
+3.  100% code test coverage via Simple Cov 
+		Pretty much (87.12%)
+
+4.  Github repo linked to Pivotal Tracker
+		Done!
+
+5.  Pivotal Tracker project to track requirements, and development tasks from above list and any additional things you realize you need to do (each commit message must be linked to a PT ticket)
+		Done! See PivotalTracker here: https://www.pivotaltracker.com/n/projects/1132470
+
+6.  ReadMe with setup instructions for your app and CodeClimate Badge
+		Done! See this.
+
+7.  Should not be ugly (twitter-bootstrap, Zurb foundation, or your own styles applied is fine, but something nicer than default rails stuff.)
+		Very basic, but done!
+

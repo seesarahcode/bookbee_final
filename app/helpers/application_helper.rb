@@ -27,11 +27,19 @@ module ApplicationHelper
 	end
 
 	def blocked_user?(user)
-		true if user.blocked_users.find_by_user_id(user.id)
+		if BlockedUser.find_by_user_id(user.id)
+			true
+		else
+			false
+		end
 	end
 
 	def following?(user, book)
-		user.follows.where(book_id = book.id).exists?
+		if user.follows.where(book_id = book.id).exists?
+			true
+		else
+			false
+		end
 	end
 
 	def set_tags(book)
@@ -40,5 +48,7 @@ module ApplicationHelper
       TagWord.new(:tag_word => "#{tag_word}", :book_id => book.id)
     end
   end
+
+
 
 end

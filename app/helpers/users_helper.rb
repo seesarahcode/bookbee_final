@@ -7,11 +7,19 @@ module UsersHelper
 	end
 
 	def follows_exist?(user)
-		true if user.follows.any?
+		if user.follows.any?
+			true
+		else
+			false
+		end
 	end
 
 	def receives_book_updates?(user)
-		true if user.receive_book_updates
+		if user.receive_book_updates
+			true
+		else
+			false
+		end
 	end
 
 end
